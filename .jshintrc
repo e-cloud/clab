@@ -1,5 +1,4 @@
 {
-
     // Enforcing options
     // http://www.jshint.com/docs/options/#enforcing-options
 
@@ -12,14 +11,13 @@
     "nonew": true,
     "undef": true,
     "unused": true,
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // Relaxing options
     // http://www.jshint.com/docs/options/#relaxing-options
 
+    "asi": true,
     "esnext": true,
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // Environments
@@ -27,6 +25,9 @@
 
     "browser": true,
     "jquery": true,
-    "node": true
-
+    "node": true,
+    // Custom Globals// additional predefined global variables
+    "globals": [
+        "angular"
+    ]
 }
