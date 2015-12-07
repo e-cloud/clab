@@ -20,12 +20,16 @@
   ],
   "dependencies": {
     "angular": "~1.4.8",
-    "angular-ui-router": "ui-router#~0.2.15",
+    "angular-animate": "~1.4.8",
     "angular-cookies": "~1.4.8",
     "angular-messages": "~1.4.8",
-    "angular-animate": "~1.4.8",
     "angular-mocks": "~1.4.8",
+    "angular-ui-router": "~0.2.15",
+    "animate.css": "~3.4.0",
+    "bootstrap-sass": "~3.3.6",
+    "font-awesome": "~4.5.0",
+    "foundation": "~5.5.3",
     "lodash": "~3.10.1",
-    "bootstrap-sass": "~3.3.6"
+    "three.js": "~0.73.0"
   }
 }
