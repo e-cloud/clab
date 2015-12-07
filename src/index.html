@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
+
     <style>
         .browserupgrade {
             margin: 0;
@@ -26,8 +27,7 @@
         }
     </style>
 
-
-    <!-- livereload -->
+    <link rel="stylesheet" href="./lib/loadScreen.css">
 </head>
 <body ng-show="!css.loading">
 <!--[if lt IE 8]>
@@ -36,7 +36,7 @@
 <![endif]-->
 
 <section id="preLoading">
-    <p id="preLoadingMessage">加载中</p>
+    <p id="preLoadingMessage">Loading...</p>
     <div id="indicator">
         <span id="indicator-before"></span>
         <span id="indicator-after"></span>
@@ -46,8 +46,8 @@
 </section>
 
 <!-- Add your site or application content here -->
-<section id="loadedContent" class="loading">
-    <!-- index-page -->
+<section id="loadedContent" class="loading view-container" ng-controller="RootController">
+    <div class="view-frame" ui-view></div>
 </section>
 
 <script type="text/javascript" src="main.js"></script>

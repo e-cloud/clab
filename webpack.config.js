@@ -1,14 +1,15 @@
 'use strict';
 var webpack = require('webpack');
 var path = require('path');
-var BowerWebpackPlugin = require('bower-webpack-plugin');
+//var BowerWebpackPlugin = require('bower-webpack-plugin');
 
 // Builds bundle usable inside <script>.
 module.exports = {
     context: __dirname,
-    entry: {
-        'app': './src/app/app.js'
-    },
+    entry: [
+        'babel-polyfill',
+        './src/app/app.js'
+    ],
     output: {
         path: path.join(__dirname, "/dist"),
         filename: "[name].js",
@@ -20,7 +21,9 @@ module.exports = {
         loaders: [
             {
                 test: /\.js?$/,
-                exclude: /node_modules/,
+                include: [
+                    path.resolve(__dirname, "src")
+                ],
                 loader: 'babel-loader'
             }
         ]
@@ -28,8 +31,8 @@ module.exports = {
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.DedupePlugin(),
-        //new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
-        new BowerWebpackPlugin({excludes: /.*\.less/})
+        new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+        //new BowerWebpackPlugin({excludes: /.*\.less/})
     ],
     resolve: {
         extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx"]

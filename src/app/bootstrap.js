@@ -8,8 +8,6 @@ let app = require('./app.js')
 
 function bootstrap(finishCb) {
 
-
-
     angular.element(document).ready(function () {
         console.log('angular.bootstrap', '### ' + app.name + ' ###', 'modules:', app.requires)
 

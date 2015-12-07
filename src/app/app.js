@@ -10,3 +10,5 @@ let app = angular.module('App', [])
 app.controller('RootController', function ($scope) {
 
 })
+
+export default app
