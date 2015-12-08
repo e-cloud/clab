@@ -34,20 +34,26 @@
     "gulp-sass": "^2.0.4",
     "gulp-template": "^3.0.0",
     "gulp-uglify": "^1.2.0",
+    "gulp-util": "latest",
+    "ng-annotate-loader": "0.0.10",
+    "raw-loader": "^0.5.1",
+    "run-sequence": "^1.1.5",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
-    "babel-polyfill": "^6.3.14",
-    "babel-runtime": "^6.3.13",
-    "bluebird": "^3.0.6",
     "angular": "~1.4.8",
     "angular-animate": "~1.4.8",
     "angular-cookies": "~1.4.8",
     "angular-messages": "~1.4.8",
     "angular-mocks": "~1.4.8",
     "angular-ui-router": "~0.2.15",
+    "babel-polyfill": "^6.3.14",
+    "babel-runtime": "^6.3.13",
+    "bluebird": "^3.0.6",
+    "jquery": "^2.1.4",
     "lodash": "~3.10.1",
+    "modernizr": "^3.2.0",
     "three.js": "~0.73.0"
   }
 }

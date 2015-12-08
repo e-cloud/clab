@@ -8,14 +8,14 @@ module.exports = {
     context: __dirname,
     entry: [
         'babel-polyfill',
-        './src/app/app.js'
+        './src/app/bootstrap.js'
     ],
     output: {
-        path: path.join(__dirname, "/dist"),
+        path: path.join(__dirname, "dist"),
         filename: "[name].js",
-        libraryTarget: "umd",
-        library: "app"
+        libraryTarget: "umd"
     },
+    debug: false,
     devtool: 'source-map',
     module: {
         loaders: [
@@ -24,14 +24,27 @@ module.exports = {
                 include: [
                     path.resolve(__dirname, "src")
                 ],
-                loader: 'babel-loader'
+                loaders: ['ng-annotate', 'babel-loader']
+            }, {
+                test: /\.html/,
+                include: [
+                    path.resolve(__dirname, "src")
+                ],
+                loader: 'raw'
             }
         ]
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+        new webpack.ProvidePlugin({
+            // Automtically detect jQuery and $ as free var in modules
+            // and inject the jquery library
+            // This is required by many jquery plugins
+            jQuery: "jquery",
+            $: "jquery"
+        })
+        //new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
         //new BowerWebpackPlugin({excludes: /.*\.less/})
     ],
     resolve: {
