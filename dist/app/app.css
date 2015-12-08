@@ -1,4 +1,4 @@
-@import url(../../bower_components/animate.css/animate.min.css);
+@import url(//cdn.bootcss.com/animate.css/3.4.0/animate.min.css);
 /* line 17, stdin */ html, body { overflow: hidden; font-size: 16px; }
 
 /* line 22, stdin */ body { height: 100%; margin: 0; padding: 0; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-color: #205c93; font-family: "Hiragino Sans GB", "Microsoft Yahei", Tahoma, Arial, sans-serif; }
