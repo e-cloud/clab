@@ -11,6 +11,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
 
+
     <style>
         .browserupgrade {
             margin: 0;
@@ -28,8 +29,10 @@
     </style>
 
     <link rel="stylesheet" href="./lib/loadScreen.css">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="app/app.css" rel="stylesheet">
 </head>
-<body ng-show="!css.loading">
+<body>
 <!--[if lt IE 8]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a
     href="http://browsehappy.com/">upgrade your browser</a>to improve your experience.</p>
@@ -37,6 +40,7 @@
 
 <section id="preLoading">
     <p id="preLoadingMessage">Loading...</p>
+
     <div id="indicator">
         <span id="indicator-before"></span>
         <span id="indicator-after"></span>
@@ -46,8 +50,10 @@
 </section>
 
 <!-- Add your site or application content here -->
-<section id="loadedContent" class="loading view-container" ng-controller="RootController">
-    <div class="view-frame" ui-view></div>
+<section id="loadedContent" class="loading">
+    <div class="view-container">
+        <div class="view-frame" ui-view></div>
+    </div>
 </section>
 
 <script type="text/javascript" src="main.js"></script>

@@ -1,0 +1,33 @@
+.project-item {
+    list-style:none;
+    box-sizing:border-box;
+}
+
+.project-item.ng-enter-stagger {
+    /* this will have a 100ms delay between each successive leave animation */
+    transition-delay: 0.2s;
+
+    /* As of 1.4.4, this must always be set: it signals ngAnimate
+	  to not accidentally inherit a delay property from another CSS class */
+    transition-duration: 0s;
+}
+.project-item.ng-move,
+.project-item.ng-enter,
+.project-item.ng-leave {
+    -webkit-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+}
+
+.project-item.ng-leave.ng-leave-active,
+.project-item.ng-move,
+.project-item.ng-enter {
+    opacity:0;
+
+}
+
+.project-item.ng-leave,
+.project-item.ng-move.ng-move-active,
+.project-item.ng-enter.ng-enter-active {
+    opacity:1;
+
+}

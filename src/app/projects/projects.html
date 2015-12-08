@@ -1,0 +1,13 @@
+<div class="row page projects">
+    <ul class="project-list">
+        <li class="col-xs-12 col-sm-6 col-md-3 col-md-2 project-item" ng-repeat="item in projectList track by $index">
+            <a class="thumbnail" ui-sref="root.project.detail({projectId:item.id})">
+                <img ng-src="{{item.imageUrl}}" alt="item.name">
+
+                <div class="caption">
+                    <h3>{{item.name}}</h3>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
