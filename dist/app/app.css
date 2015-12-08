@@ -1,0 +1,81 @@
+@import url(../../bower_components/animate.css/animate.min.css);
+/* line 17, stdin */ html, body { overflow: hidden; font-size: 16px; }
+
+/* line 22, stdin */ body { height: 100%; margin: 0; padding: 0; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-color: #205c93; font-family: "Hiragino Sans GB", "Microsoft Yahei", Tahoma, Arial, sans-serif; }
+
+/* line 31, stdin */ .full-fill { width: 100%; height: 100%; }
+
+/* line 36, stdin */ .text-ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* line 42, stdin */ ::-moz-selection { background: #5291fc; } ::selection { background: #5291fc; }
+
+/* line 46, stdin */ .full-height { height: 100%; }
+
+/* line 50, stdin */ .view-container { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+
+/* line 54, stdin */ .view-frame { overflow: auto; height: 100%; -webkit-animation-duration: 1s; animation-duration: 1s; -webkit-animation-fill-mode: both; animation-fill-mode: both; }
+
+/* line 60, stdin */ .view-frame.ng-enter, .view-frame.ng-leave { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+
+/* line 64, stdin */ .view-frame.ng-enter { z-index: 100; -webkit-animation-name: fadeIn; animation-name: fadeIn; }
+
+/* line 69, stdin */ .view-frame.ng-leave { z-index: 99; -webkit-animation-name: fadeOut; animation-name: fadeOut; }
+
+/* line 18, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom { background-color: rgba(0, 0, 0, 0.3); border: none; }
+
+/* line 22, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-brand { color: #e8e8e8; }
+
+/* line 24, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-brand:hover, .navbar-custom .navbar-brand:focus { color: white; background-color: rgba(78, 155, 218, 0.62); }
+
+/* line 31, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-text { color: white; }
+
+/* line 36, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-nav > li > a { color: white; }
+
+/* line 39, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-nav > li > a:hover, .navbar-custom .navbar-nav > li > a:focus { color: white; background-color: rgba(78, 155, 218, 0.62); }
+
+/* line 46, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-nav > .active > a, .navbar-custom .navbar-nav > .active > a:hover, .navbar-custom .navbar-nav > .active > a:focus { color: white; background-color: #205c93; }
+
+/* line 54, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-nav > .disabled > a, .navbar-custom .navbar-nav > .disabled > a:hover, .navbar-custom .navbar-nav > .disabled > a:focus { color: white; background-color: white; }
+
+/* line 63, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-toggle { border-color: white; }
+
+/* line 65, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-toggle:hover, .navbar-custom .navbar-toggle:focus { background-color: white; }
+
+/* line 69, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-toggle .icon-bar { background-color: white; }
+
+/* line 74, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-collapse, .navbar-custom .navbar-form { border-color: white; }
+
+/* line 83, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-nav > .open > a, .navbar-custom .navbar-nav > .open > a:hover, .navbar-custom .navbar-nav > .open > a:focus { background-color: #205c93; color: white; }
+
+@media (max-width: 767px) { /* line 94, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-nav .open .dropdown-menu > li > a { color: white; }
+  /* line 96, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-custom .navbar-nav .open .dropdown-menu > li > a:focus { color: white; background-color: rgba(78, 155, 218, 0.62); }
+  /* line 103, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-nav .open .dropdown-menu > .active > a, .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:focus { color: white; background-color: #205c93; }
+  /* line 111, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a, .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:hover, .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:focus { color: white; background-color: white; } }
+
+/* line 126, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-link { color: white; }
+
+/* line 128, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .navbar-link:hover { color: white; }
+
+/* line 133, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .btn-link { color: white; }
+
+/* line 135, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .btn-link:hover, .navbar-custom .btn-link:focus { color: white; }
+
+/* line 141, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .navbar-custom .btn-link[disabled]:hover, .navbar-custom .btn-link[disabled]:focus, fieldset[disabled] .navbar-custom .btn-link:hover, fieldset[disabled] .navbar-custom .btn-link:focus { color: white; }
+
+/* line 149, G:/ScottWorkplace/github/clab/src/app/common/_nav.scss */ .vr:before { content: ''; position: absolute; left: 0; height: 100%; width: 1px; border-left: dashed 1px #ccc; }
+
+/* line 77, stdin */ .page-container { position: absolute; top: 50px; right: 0; bottom: 0; left: 0; }
+
+/* line 81, stdin */ .page { margin: 2em; font-size: 1.5rem; }
+
+/* line 2, G:/ScottWorkplace/github/clab/src/app/home/_home.scss */ .intro { color: wheat; }
+
+/* line 1, G:/ScottWorkplace/github/clab/src/app/projects/_projects.scss */ .project-item { list-style: none; box-sizing: border-box; }
+
+/* line 6, G:/ScottWorkplace/github/clab/src/app/projects/_projects.scss */ .project-item.ng-enter-stagger { /* this will have a 100ms delay between each successive leave animation */ -webkit-transition-delay: 0.2s; transition-delay: 0.2s; /* As of 1.4.4, this must always be set: it signals ngAnimate to not accidentally inherit a delay property from another CSS class */ -webkit-transition-duration: 0s; transition-duration: 0s; }
+
+/* line 14, G:/ScottWorkplace/github/clab/src/app/projects/_projects.scss */ .project-item.ng-move, .project-item.ng-enter, .project-item.ng-leave { -webkit-transition: all linear 0.5s; transition: all linear 0.5s; }
+
+/* line 21, G:/ScottWorkplace/github/clab/src/app/projects/_projects.scss */ .project-item.ng-leave.ng-leave-active, .project-item.ng-move, .project-item.ng-enter { opacity: 0; }
+
+/* line 28, G:/ScottWorkplace/github/clab/src/app/projects/_projects.scss */ .project-item.ng-leave, .project-item.ng-move.ng-move-active, .project-item.ng-enter.ng-enter-active { opacity: 1; }
