@@ -1,6 +1,7 @@
 'use strict';
-var webpack = require('webpack');
-var path = require('path');
+let webpack = require('webpack');
+let path = require('path');
+let BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 //var BowerWebpackPlugin = require('bower-webpack-plugin');
 
 // Builds bundle usable inside <script>.
@@ -30,7 +31,7 @@ module.exports = {
                 include: [
                     path.resolve(__dirname, "src")
                 ],
-                loader: 'raw'
+                loader: 'raw!html-minify'
             }
         ]
     },
@@ -38,16 +39,25 @@ module.exports = {
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.DedupePlugin(),
         new webpack.ProvidePlugin({
-            // Automtically detect jQuery and $ as free var in modules
+            // Automatically detect jQuery and $ as free var in modules
             // and inject the jquery library
             // This is required by many jquery plugins
             jQuery: "jquery",
             $: "jquery"
-        })
+        }),
         //new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
         //new BowerWebpackPlugin({excludes: /.*\.less/})
+        new BrowserSyncPlugin({
+            proxy: 'localhost:8080',
+            //server: { baseDir: ['dist'] }
+        })
     ],
     resolve: {
         extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx"]
+    },
+    'html-minify-loader': {
+        empty: true,        // KEEP empty attributes
+        cdata: false,        // KEEP CDATA from scripts
+        comments: false     // KEEP comments
     }
 };

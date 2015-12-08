@@ -10,7 +10,7 @@ let webpackConfig = require("./webpack.config.js");
 let gulp_plugins = require('gulp-load-plugins')()
 let run_sequence = require('run-sequence')
 let Debug = true
-let distDir = 'dist'
+let distDir = './dist/'
 
 require('./gulp/util')
 
@@ -75,7 +75,7 @@ gulp.task("webpack-dev-server", ["build-dev"], function () {
 
     // Start a webpack-dev-server
     new WebpackDevServer(webpack(myConfig), {
-        publicPath: distDir,
+        publicPath: '',
         stats: {
             colors: true
         }
