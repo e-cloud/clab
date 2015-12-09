@@ -14,15 +14,16 @@ $page-background-color: #205c93;
     left: $left;
 }
 
-html, body {
+html {
     overflow: hidden;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 body {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-size: 1rem;
     user-select: none;
     background-color: $page-background-color;
     font-family: $font-family;

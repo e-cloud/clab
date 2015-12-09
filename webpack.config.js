@@ -1,8 +1,8 @@
 'use strict';
-let webpack = require('webpack');
-let path = require('path');
-let BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-//var BowerWebpackPlugin = require('bower-webpack-plugin');
+let webpack = require('webpack')
+let path = require('path')
+let BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+//var BowerWebpackPlugin = require('bower-webpack-plugin')
 
 // Builds bundle usable inside <script>.
 module.exports = {
@@ -18,6 +18,17 @@ module.exports = {
     },
     debug: false,
     devtool: 'source-map',
+    devServer: {
+        stats: {
+            assets: false,
+            colors: true,
+            version: false,
+            hash: false,
+            timings: false,
+            chunks: false,
+            chunkModules: false
+        }
+    },
     module: {
         loaders: [
             {
@@ -25,7 +36,7 @@ module.exports = {
                 include: [
                     path.resolve(__dirname, "src")
                 ],
-                loaders: ['ng-annotate', 'babel-loader']
+                loaders: ['ng-annotate', 'babel-loader', 'eslint-loader']
             }, {
                 test: /\.html/,
                 include: [
@@ -45,7 +56,6 @@ module.exports = {
             jQuery: "jquery",
             $: "jquery"
         }),
-        //new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
         //new BowerWebpackPlugin({excludes: /.*\.less/})
         new BrowserSyncPlugin({
             proxy: 'localhost:8080',
@@ -60,4 +70,4 @@ module.exports = {
         cdata: false,        // KEEP CDATA from scripts
         comments: false     // KEEP comments
     }
-};
+}
