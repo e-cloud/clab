@@ -17,6 +17,7 @@ import './projectTpl/project'
 
 
 require('angular-ui-router')
+require('angular-ui-bootstrap')
 require('angular-animate')
 require('angular-messages')
 require('angular-cookies')
@@ -28,6 +29,7 @@ let app = angular.module('App', [
         'ngAnimate',
         'ngMessages',
         'ui.router',
+        'ui.bootstrap',
 
         'app.constant',
         'app.config',
@@ -71,6 +73,10 @@ let app = angular.module('App', [
             })
 
         })
+    })
+
+    .run(function ($templateCache) {
+        $templateCache.put("nav.tpl.html", require('./common/nav.html'))
     })
 
 export default app

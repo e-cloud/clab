@@ -16,7 +16,6 @@ $navbar-default-toggle-icon-bar-bg: white;
 $navbar-default-border: white;
 
 .navbar-custom {
-    background-color: $navbar-default-bg;
     border: none;
 
     .navbar-brand {
@@ -43,13 +42,10 @@ $navbar-default-border: white;
             }
         }
         > .active > a {
-            &,
-            &:hover,
-            &:focus {
-                color: $navbar-default-link-active-color;
-                background-color: $navbar-default-link-active-bg;
-            }
+            color: $navbar-default-link-active-color;
+            background-color: $navbar-default-brand-hover-bg;
         }
+
         > .disabled > a {
             &,
             &:hover,

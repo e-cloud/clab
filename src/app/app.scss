@@ -16,7 +16,6 @@ $page-background-color: #205c93;
 
 html {
     overflow: hidden;
-    font-size: 14px;
 }
 
 body {
@@ -76,12 +75,31 @@ body {
 @import "common/nav";
 
 .page-container {
-    @include fill-parent(50px)
+    @include fill-parent();
+    margin: 3rem;
 }
 
 .page {
-    margin: 2em;
+    margin: 2em 0;
     font-size: 1.5rem;
+}
+
+@media screen and (min-width: $screen-phone) {
+    html {
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width: $screen-tablet) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: $screen-desktop) {
+    html {
+        font-size: 16px;
+    }
 }
 
 @import './home/home';

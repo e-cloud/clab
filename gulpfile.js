@@ -24,10 +24,16 @@ const webpackConfig = require("./webpack.config.js")
  * ----------------------------------------------------------- */
 let Debug = true
 let distDir = './dist/'
+let miscPattern = '/**/*.{css,map,gif,jpg,png,ico,bmp,woff,woff2,xsd,wsdl,svg,mp3,wav}'
+let libPath = './bower_components'
 
 // modify some webpack config options
 let myDevConfig = Object.create(webpackConfig)
-// create a single instance of the compiler to allow caching
+myDevConfig.plugins = myDevConfig.plugins.concat([
+    new webpack.DefinePlugin({
+        __DEV__: 'true'
+    })]
+)// create a single instance of the compiler to allow caching
 let devCompiler = webpack(myDevConfig)
 
 
@@ -38,21 +44,24 @@ let atomicTasks = {
     'webpack:build': function (callback) {
         // modify some webpack config options
         let myConfig = Object.create(webpackConfig)
-        myConfig.plugins = myConfig.plugins.concat(
+        myConfig.plugins = myConfig.plugins.concat([
+            new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
             new webpack.DefinePlugin({
-                "process.env": {
-                    // This has effect on the react lib size
-                    "NODE_ENV": JSON.stringify("production")
-                }
-            }),
-            new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})
+                //JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
+                __DEV__: 'false'
+            })]
         )
 
         // run webpack
         webpack(myConfig, function (err, stats) {
             if (err) throw new gUtil.PluginError("webpack:build", err)
             gUtil.log("[webpack:build]", stats.toString({
-                colors: true
+                assets: true,
+                colors: true,
+                version: true,
+                hash: true,
+                timings: true,
+                chunks: false
             }))
             callback()
         })
@@ -70,10 +79,10 @@ let atomicTasks = {
     },
     'webpack-dev-server': function () {
         // modify some webpack config options
-        let myConfig = Object.create(webpackConfig)
+        //let myDevConfig = Object.create(webpackConfig)
 
         // Start a webpack-dev-server
-        new WebpackDevServer(webpack(myConfig), {
+        new WebpackDevServer(webpack(myDevConfig), {
             contentBase: distDir,
             publicPath: distDir,
             stats: {
@@ -81,7 +90,7 @@ let atomicTasks = {
                 colors: true,
                 version: false,
                 hash: false,
-                timings: false,
+                timings: true,
                 chunks: false,
                 chunkModules: false
             }
@@ -91,6 +100,9 @@ let atomicTasks = {
         })
     },
     'static:copy': function () {
+        gulp.src([libPath + miscPattern], {base: '.'})
+            .pipe(gulp.dest(distDir))
+
         return gulp.src(['./src/*.*', './src/lib/*.css'], {base: './src'})
             .pipe(gulp.dest(distDir))
     },
@@ -137,7 +149,7 @@ let composedTasks = {
     },
     // Production build
     'build': {
-        dep: ["webpack:build"]
+        dep: ['static:copy', 'build:style', "webpack:build"]
     },
     'build:style': function (cb) {
         runSequence('scss:build', 'css:autoPrefix', 'css:minify', cb)
