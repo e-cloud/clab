@@ -1,0 +1,57 @@
+.view-container {
+    @include fill-parent()
+}
+
+.view-frame {
+    overflow: auto;
+    height: 100%;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+
+    &.ng-enter, &.ng-leave {
+        @include fill-parent()
+    }
+
+    &.ng-enter {
+        z-index: 100;
+        animation-name: fadeIn;
+    }
+
+    &.ng-leave {
+        z-index: 99;
+        animation-name: fadeOut;
+    }
+}
+
+
+
+.page-container {
+    @include fill-parent();
+}
+
+.page {
+    margin: 3rem;
+    font-size: 1.25rem;
+}
+
+.content {
+    margin: 2em 0;
+}
+
+@media screen and (min-width: $screen-phone) {
+    html {
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width: $screen-tablet) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: $screen-lg-desktop) {
+    html {
+        font-size: 16px;
+    }
+}

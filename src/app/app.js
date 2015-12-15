@@ -33,6 +33,7 @@ let app = angular.module('App', [
 
         'app.constant',
         'app.config',
+        'app.directive',
 
         'app.home',
         'app.about',

@@ -1,106 +1,10 @@
-$font-family: "Hiragino Sans GB", "Microsoft Yahei", Tahoma, Arial, sans-serif;
-
+@charset "UTF-8";
 $lib_path: "../../bower_components";
-$page-background-color: #205c93;
 @import url(#{$lib_path}/animate.css/animate.min.css);
 
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
 
-@mixin fill-parent($top:0, $right:0, $bottom:0, $left:0) {
-    position: absolute;
-    top: $top;
-    right: $right;
-    bottom: $bottom;
-    left: $left;
-}
-
-html {
-    overflow: hidden;
-}
-
-body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-size: 1rem;
-    user-select: none;
-    background-color: $page-background-color;
-    font-family: $font-family;
-}
-
-.full-fill {
-    width: 100%;
-    height: 100%;
-}
-
-.text-ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-::selection {
-    background: #5291fc;
-}
-
-.full-height {
-    height: 100%;
-}
-
-.view-container {
-    @include fill-parent()
-}
-
-.view-frame {
-    overflow: auto;
-    height: 100%;
-    animation-duration: 1s;
-    animation-fill-mode: both;
-
-    &.ng-enter, &.ng-leave {
-        @include fill-parent()
-    }
-
-    &.ng-enter {
-        z-index: 100;
-        animation-name: fadeIn;
-    }
-
-    &.ng-leave {
-        z-index: 99;
-        animation-name: fadeOut;
-    }
-}
-
-@import "common/nav";
-
-.page-container {
-    @include fill-parent();
-    margin: 3rem;
-}
-
-.page {
-    margin: 2em 0;
-    font-size: 1.5rem;
-}
-
-@media screen and (min-width: $screen-phone) {
-    html {
-        font-size: 12px;
-    }
-}
-
-@media screen and (min-width: $screen-tablet) {
-    html {
-        font-size: 14px;
-    }
-}
-
-@media screen and (min-width: $screen-desktop) {
-    html {
-        font-size: 16px;
-    }
-}
+@import "common/common";
 
 @import './home/home';
 @import './contact/contact';

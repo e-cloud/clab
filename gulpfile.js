@@ -52,6 +52,8 @@ let atomicTasks = {
             })]
         )
 
+        Debug = false
+
         // run webpack
         webpack(myConfig, function (err, stats) {
             if (err) throw new gUtil.PluginError("webpack:build", err)
@@ -109,10 +111,9 @@ let atomicTasks = {
     'scss:build': function () {
         let styleConfig = Debug ? {
             errLogToConsole: true,
-            outputStyle: 'compact',
-            sourceComments: true,
+            outputStyle: 'expanded',
             sourceMap: true,
-            outFile: './'
+            outFile: distDir
         } : {
             outputStyle: 'compressed',
             sourceComments: false
@@ -149,7 +150,7 @@ let composedTasks = {
     },
     // Production build
     'build': {
-        dep: ['static:copy', 'build:style', "webpack:build"]
+        dep: ["webpack:build", 'static:copy', 'build:style']
     },
     'build:style': function (cb) {
         runSequence('scss:build', 'css:autoPrefix', 'css:minify', cb)

@@ -150,3 +150,11 @@ $navbar-default-border: white;
     width: 1px;
     border-left: dashed 1px #ccc;
 }
+
+.contact-dropdown {
+    &:hover, &:focus {
+        .dropdown-menu {
+            display: block;
+        }
+    }
+}
