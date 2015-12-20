@@ -17,7 +17,7 @@ angular.module('app.project', [])
             data: {pageTitle: 'project'}
         })*/
 
-        $stateProvider.state('root.detail', {
+        $stateProvider.state('detail', {
             url: '/project/{projectId:[0-9]{1,4}}',
             template: require('./detail.html'),
             controller: 'ProjectDetailController',

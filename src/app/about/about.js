@@ -7,7 +7,7 @@ let angular = require('angular')
 
 angular.module('app.about', [])
     .config(function ($stateProvider) {
-        $stateProvider.state('root.about', {
+        $stateProvider.state('about', {
             url: '/about',
             template: require('./about.html'),
             controller: 'AboutController',

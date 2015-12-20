@@ -69,7 +69,7 @@ let atomicTasks = {
         })
     },
     'webpack:build-dev': {
-        dep: ['static:copy', 'build:style'],
+        dep: ['build:style'],
         runner: function (callback) {
             // run webpack
             devCompiler.run(function (err, stats) {
@@ -96,7 +96,7 @@ let atomicTasks = {
                 chunks: false,
                 chunkModules: false
             }
-        }).listen(8080, "localhost", function (err) {
+        }).listen(8000, "localhost", function (err) {
             if (err) throw new gUtil.PluginError("webpack-dev-server", err)
             gUtil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/index.html")
         })
@@ -105,7 +105,7 @@ let atomicTasks = {
         gulp.src([libPath + miscPattern], {base: '.'})
             .pipe(gulp.dest(distDir))
 
-        return gulp.src(['./src/*.*', './src/lib/*.css'], {base: './src'})
+        return gulp.src(['./src/*.*', './src/lib/*.css', './src/asset/**/*.{svg,jpg,jpeg,png,gif,mp3,mp4}'], {base: './src'})
             .pipe(gulp.dest(distDir))
     },
     'scss:build': function () {
@@ -150,12 +150,14 @@ let composedTasks = {
     },
     // Production build
     'build': {
-        dep: ["webpack:build", 'static:copy', 'build:style']
+        dep: ["webpack:build", 'build:style']
     },
-    'build:style': function (cb) {
-        runSequence('scss:build', 'css:autoPrefix', 'css:minify', cb)
+    'build:style': {
+        dep: ['static:copy'],
+        runner: function (cb) {
+            runSequence('scss:build', 'css:autoPrefix', 'css:minify', cb)
+        }
     },
-
     // Build and watch cycle (another option for development)
     // Advantage: No server required, can run app from filesystem
     // Disadvantage: Requests are not blocked until bundle is available,

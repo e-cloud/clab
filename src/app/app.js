@@ -42,13 +42,13 @@ let app = angular.module('App', [
         'app.project'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
-        $stateProvider.state('root', {
+        /*$stateProvider.state('root', {
             abstract: true,
-            template: require('./main_layout.html'),
+            template: require('./common/main_layout.html'),
             controller: 'RootController',
             controllerAs: 'rc',
             data: {pageTitle: 'root'}
-        })
+        })*/
 
         $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get("$state");

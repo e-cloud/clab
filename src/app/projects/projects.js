@@ -8,7 +8,7 @@ let _ = require('lodash')
 
 angular.module('app.projects', [])
     .config(function ($stateProvider) {
-        $stateProvider.state('root.projects', {
+        $stateProvider.state('projects', {
             url: '/projects',
             template: require('./projects.html'),
             controller: 'ProjectGalleryController',
@@ -21,7 +21,7 @@ angular.module('app.projects', [])
 
         $timeout(function(){
             let list = []
-            list.length = 50
+            list.length = 20
             _.fill(list, {
                 id: 2,
                 name: 'hello world',

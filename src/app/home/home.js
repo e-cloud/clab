@@ -8,7 +8,7 @@ let _ = require('lodash')
 
 angular.module('app.home', [])
     .config(function ($stateProvider, $urlRouterProvider) {
-        $stateProvider.state('root.home', {
+        $stateProvider.state('home', {
             url: '/',
             template: require('./home.html'),
             controller: 'HomeController',
@@ -17,7 +17,7 @@ angular.module('app.home', [])
         })
 
     })
-    .constant('defaultState', 'root.home')
+    .constant('defaultState', 'home')
     .controller('HomeController', function ($scope) {
         $scope.hi = 'hello'
     })

@@ -7,7 +7,7 @@ let angular = require('angular')
 
 angular.module('app.contact', [])
     .config(function ($stateProvider) {
-        $stateProvider.state('root.contact', {
+        $stateProvider.state('contact', {
             url: '/contact',
             template: require('./contact.html'),
             controller: 'ContactController',
