@@ -1,4 +1,72 @@
+.home > * {
+    float: left;
+}
 
 .intro {
     color: wheat;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 3rem;
 }
+
+.home-gallery {
+    // margin-top: 2rem;
+}
+
+@media (max-width: 1200px) {
+    .intro {
+        width: 100%;
+        margin-top: 2rem;
+    }
+
+    .home-gallery {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1440px) {
+    .intro {
+        width: 40%;
+        margin-top: 1rem;
+        font-size: 1rem;
+    }
+
+    .home-gallery {
+        width: 60%;
+    }
+}
+
+@media (min-width: 1440px) and (max-width: 1600px) {
+    .intro {
+        width: 45%;
+        margin-top: 2rem;
+    }
+
+    .home-gallery {
+        width: 55%;
+    }
+}
+
+@media (min-width: 1600px) and (max-width: 1800px) {
+    .intro {
+        width: 50%;
+        margin-top: 3rem;
+    }
+
+    .home-gallery {
+        width: 50%;
+    }
+}
+
+@media (min-width: 1800px) {
+    .intro {
+        width: 45%;
+        margin: 5%;
+    }
+
+    .home-gallery {
+        width: 45%;
+    }
+}
+
+@import "hexgon";
+@import "bulb";
