@@ -25,7 +25,7 @@ angular.module('app.projects', [])
             _.fill(list, {
                 id: 2,
                 name: 'hello world',
-                imageUrl: '/asset/spock.jpg',
+                imageUrl: './asset/spock.jpg',
                 description: 'I am spock. hello, guys'
             })
             $scope.projectList = list
