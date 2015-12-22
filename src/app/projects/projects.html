@@ -4,11 +4,12 @@
         <ul class="project-list">
             <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 project-item"
                 ng-repeat="item in projectList track by $index">
-                <a class="thumbnail" ui-sref="root.detail({projectId:item.id})">
+                <a class="thumbnail" ui-sref="detail({projectId:item.id})">
                     <img ng-src="{{item.imageUrl}}" alt="item.name">
 
-                    <div class="caption">
-                        <h3>{{item.name}}</h3>
+                    <div class="project-caption">
+                        <div class="project-name"><h3>{{item.name}}</h3></div>
+                        <div class="project-description"><p>{{item.description}}</p></div>
                     </div>
                 </a>
             </li>

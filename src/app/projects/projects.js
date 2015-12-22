@@ -19,14 +19,15 @@ angular.module('app.projects', [])
     .controller('ProjectGalleryController', function ($scope, $timeout) {
         $scope.hi = 'hello'
 
-        $timeout(function(){
+        $timeout(function () {
             let list = []
             list.length = 20
             _.fill(list, {
                 id: 2,
                 name: 'hello world',
-                imageUrl: '******'
+                imageUrl: '/asset/spock.jpg',
+                description: 'I am spock. hello, guys'
             })
             $scope.projectList = list
-        }, 3000)
+        }, 1000)
     })

@@ -1,3 +1,62 @@
-.about-img {
-    box-shadow: 0 0 0 10px rgba(128, 128, 128, 0.28);
+.about {
+    margin: 3rem 10rem;
+}
+
+.figure {
+    &:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+}
+
+@media (max-width: $screen-tablet) {
+    .about {
+        margin: 3rem;
+    }
+
+    .figure {
+        margin-bottom: 4rem;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        .description {
+            margin-bottom: 1rem;
+            font-size: 1.2em;
+        }
+        .description, .portrait {
+            width: 100%;
+        }
+    }
+}
+
+@media (min-width: $screen-tablet) {
+    .figure {
+        //height: 30vh;
+        .description {
+            padding: 0 1rem;
+        }
+        .description, .portrait {
+            width: 50%;
+            float: left;
+        }
+        &:nth-child(even) .description {
+            float: right;
+        }
+    }
+}
+
+@media  (min-width: $screen-tablet) and (max-width: $screen-desktop) {
+    .about {
+        margin: 3rem 5rem;
+    }
+}
+@media (min-width: $screen-desktop) {
+    .figure {
+        //height: 30vh;
+        .description {
+            padding: 2rem;
+            font-size: 1.25em;
+        }
+    }
 }
