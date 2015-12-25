@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+@import "../app/common/base";
+@import "../app/common/browser_hack";
+@import "../app/common/scrollbar";
+@import "../app/common/layout";
+@import "login/login";
+@import "management/management";
+
+body {
+    background-color: #404040;
+    color: #6969E2;
+}

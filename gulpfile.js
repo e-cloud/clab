@@ -143,7 +143,7 @@ let atomicTasks = {
                 // root: distDir,
                 compatibility: 'ie9'
             }))
-            .pipe(rename({
+            .pipe(gulpPlugins.rename({
                 suffix: ".min"
             }))
             .pipe(gulp.dest(distDir))

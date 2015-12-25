@@ -7,10 +7,16 @@ let BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 // Builds bundle usable inside <script>.
 module.exports = {
     context: __dirname,
-    entry: [
-        'babel-polyfill',
-        './src/app/bootstrap.js'
-    ],
+    entry: {
+        main: [
+            'babel-polyfill',
+            './src/app/app.js'
+        ],
+        'admin/main': [
+            'babel-polyfill',
+            './src/admin/app.js'
+        ]
+    },
     output: {
         path: path.join(__dirname, "dist"),
         filename: "[name].js",
