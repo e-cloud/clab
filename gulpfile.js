@@ -13,6 +13,7 @@ let webpack = require("webpack")
 let WebpackDevServer = require("webpack-dev-server")
 let gulpPlugins = require('gulp-load-plugins')()
 let runSequence = require('run-sequence')
+let del = require('del')
 
 /* -----------------------------------------------------------
  * user data load from outside
@@ -32,8 +33,10 @@ let myDevConfig = Object.create(webpackConfig)
 myDevConfig.plugins = myDevConfig.plugins.concat([
     new webpack.DefinePlugin({
         __DEV__: 'true'
-    })]
-)// create a single instance of the compiler to allow caching
+    })
+])
+
+// create a single instance of the compiler to allow caching
 let devCompiler = webpack(myDevConfig)
 
 
@@ -44,16 +47,18 @@ let atomicTasks = {
     'webpack:build': function (callback) {
         // modify some webpack config options
         let myConfig = Object.create(webpackConfig)
+
+
+        Debug = false
+
+
         myConfig.plugins = myConfig.plugins.concat([
             new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
             new webpack.DefinePlugin({
                 //JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
-                __DEV__: 'false'
+                __DEV__: Debug
             })]
         )
-
-        Debug = false
-
         // run webpack
         webpack(myConfig, function (err, stats) {
             if (err) throw new gUtil.PluginError("webpack:build", err)
@@ -81,7 +86,7 @@ let atomicTasks = {
     },
     'webpack-dev-server': function () {
         // modify some webpack config options
-        //let myDevConfig = Object.create(webpackConfig)
+        // let myDevConfig = Object.create(webpackConfig)
 
         // Start a webpack-dev-server
         new WebpackDevServer(webpack(myDevConfig), {
@@ -96,7 +101,7 @@ let atomicTasks = {
                 chunks: false,
                 chunkModules: false
             }
-        }).listen(8000, "localhost", function (err) {
+        }).listen(9001, "localhost", function (err) {
             if (err) throw new gUtil.PluginError("webpack-dev-server", err)
             gUtil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/index.html")
         })
@@ -105,7 +110,7 @@ let atomicTasks = {
         gulp.src([libPath + miscPattern], {base: '.'})
             .pipe(gulp.dest(distDir))
 
-        return gulp.src(['./src/*.*', './src/lib/*.css', './src/asset/**/*.{svg,jpg,jpeg,png,gif,mp3,mp4}'], {base: './src'})
+        return gulp.src(['./src/*.*', './src/**/index.html', './src/lib/*.css', './src/asset/**/*.{svg,jpg,jpeg,png,gif,mp3,mp4}'], {base: './src'})
             .pipe(gulp.dest(distDir))
     },
     'scss:build': function () {
@@ -136,10 +141,44 @@ let atomicTasks = {
         return gulp.src(distDir + '/**/*.css', {base: distDir})
             .pipe(gulpPlugins.minifyCss({
                 // root: distDir,
-                sourceMap: Debug,
                 compatibility: 'ie9'
             }))
+            .pipe(rename({
+                suffix: ".min"
+            }))
             .pipe(gulp.dest(distDir))
+    },
+    'css:shorthandify': function () {
+        return gulp.src('src/index.css')
+            .pipe(shorthand())
+            .pipe(gulp.dest('dest'));
+    },
+    'css:lint': function () {
+        return gulp.src('client/css/*.css')
+            .pipe(csslint())
+            .pipe(csslint.reporter());
+    },
+    'image:optimize': function () {
+        return gulp.src('src/images/*')
+            .pipe(gulpPlugins.imagemin({
+                progressive: true, // jpg
+                interlaced: true, // gif
+                svgoPlugins: [{removeViewBox: false}],
+                use: [pngquant()]
+            }))
+            .pipe(gulp.dest('dist/images'));
+    },
+    'build-dir:clean': function (cb) {
+        del(['dist']).then(cb)
+    },
+    'version:bump': function () {
+        return gulp.src('./*.json')
+            .pipe(bump({type: 'minor'}))
+            .pipe(gulp.dest('./'));
+    },
+    'complexity:check': function () {
+        return gulp.src('*.js')
+            .pipe(gulpPlugins.complexity({breakOnErrors: true}));
     }
 }
 

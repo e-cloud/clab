@@ -58,7 +58,7 @@ module.exports = {
         }),
         //new BowerWebpackPlugin({excludes: /.*\.less/})
         new BrowserSyncPlugin({
-            proxy: 'localhost:8000',
+            proxy: 'localhost:9001',
             //server: { baseDir: ['dist'] }
         })
     ],

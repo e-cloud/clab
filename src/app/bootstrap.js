@@ -4,18 +4,19 @@
 'use strict';
 
 import loadScreen from '../lib/loadScreen.js'
-import app from './app.js'
 
 let angular = require('angular')
 
-angular.element(document).ready(function () {
-    console.log('angular.bootstrap', '### ' + app.name + ' ###', 'modules:', app.requires)
+function bootstrap(app){
+    angular.element(document).ready(function () {
+        console.log('angular.bootstrap', '### ' + app.name + ' ###', 'modules:', app.requires)
 
-    angular.bootstrap(document, [app.name], {
-        strictDi: true
+        angular.bootstrap(document, [app.name], {
+            strictDi: true
+        })
+
+        loadScreen.loaded()
     })
+}
 
-    loadScreen.loaded()
-})
-
-export default app
+export default bootstrap

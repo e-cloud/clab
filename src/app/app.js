@@ -2,12 +2,7 @@
  * Created by scott on 2015/12/7.
  */
 'use strict';
-
-import './common/constant'
-import './common/config'
-import './common/filter'
-import './common/service'
-import './common/directive'
+import './common/common'
 
 import './home/home'
 import './about/about'
@@ -15,6 +10,7 @@ import './contact/contact'
 import './projects/projects'
 import './projectTpl/project'
 
+import bootstrap from './bootstrap'
 
 require('angular-ui-router')
 require('angular-ui-bootstrap')
@@ -24,16 +20,14 @@ require('angular-cookies')
 
 let _ = require('lodash')
 let angular = require('angular')
-let app = angular.module('App', [
+let app = angular.module('app', [
         'ngCookies',
         'ngAnimate',
         'ngMessages',
         'ui.router',
         'ui.bootstrap',
 
-        'app.constant',
-        'app.config',
-        'app.directive',
+        'app.common',
 
         'app.home',
         'app.about',
@@ -79,5 +73,7 @@ let app = angular.module('App', [
     .run(function ($templateCache) {
         $templateCache.put("nav.tpl.html", require('./common/nav.html'))
     })
+
+bootstrap(app)
 
 export default app
