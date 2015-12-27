@@ -70,3 +70,26 @@
 
 @import "hexgon";
 @import "bulb";
+
+.explore .hex-content {
+    > h1, p {
+        transition: all .3s ease-in 1s;
+        pointer-events: none;
+    }
+}
+
+.hex-content .wrap {
+    z-index: -1;
+}
+
+.project-thumbnail.ng-hide-add,
+.project-thumbnail.ng-hide-remove,
+.project-thumbnail.ng-leave {
+    transition: all linear 0.5s;
+}
+
+.project-thumbnail.ng-hide {
+    opacity: 0;
+}
+
+

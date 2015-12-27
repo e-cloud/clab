@@ -3,21 +3,19 @@
     <h4 class="modal-title">Edit a project</h4>
 </div>
 <div class="modal-body ">
-    <form class="form-horizontal ng-pristine ng-valid" name="createForm">
+    <form class="form" name="createForm">
         <div class="form-group">
-            <label for="name" class="col-sm-3 control-label">Project Name</label>
+            <label for="name" class="control-label">Project Name</label>
 
-            <div class="col-sm-8">
+
                 <input type="text" class="form-control" name="name" id="name" ng-model="data.name"
                        maxlength="20" required>
-            </div>
+
         </div>
         <div class="form-group">
             <label for="desc" class="col-sm-3 control-label">Description</label>
 
-            <div class="col-sm-8">
-                <textarea class="form-control" name="desc" id="desc" rows="10" ng-model="data.description"></textarea>
-            </div>
+            <text-angular id="desc" ng-model="htmlVariable"></text-angular>
         </div>
         <div class="form-group">
             <label for="file" class="col-sm-3 control-label">Choose image</label>

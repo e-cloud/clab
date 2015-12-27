@@ -1,8 +1,15 @@
 'use strict';
-let webpack = require('webpack')
-let path = require('path')
-let BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+const webpack = require('webpack')
+const path = require('path')
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 //var BowerWebpackPlugin = require('bower-webpack-plugin')
+
+const PROJECT_CONFIG = require('./project.conf.js')
+
+PROJECT_CONFIG.browserSyncPlugin = new BrowserSyncPlugin({
+    proxy: `localhost:${PROJECT_CONFIG.port}`
+    // server: { baseDir: ['dist'] }
+})
 
 // Builds bundle usable inside <script>.
 module.exports = {
@@ -19,6 +26,7 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, "dist"),
+        publicPath: "/",
         filename: "[name].js",
         libraryTarget: "umd"
     },
@@ -63,9 +71,10 @@ module.exports = {
             $: "jquery"
         }),
         //new BowerWebpackPlugin({excludes: /.*\.less/})
-        new BrowserSyncPlugin({
-            proxy: 'localhost:9001',
-            //server: { baseDir: ['dist'] }
+        PROJECT_CONFIG.browserSyncPlugin,
+        new webpack.DefinePlugin({
+            //JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
+            __DEV__: PROJECT_CONFIG.debug
         })
     ],
     resolve: {

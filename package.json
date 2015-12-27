@@ -48,6 +48,7 @@
     "angular": "~1.4.8",
     "angular-animate": "~1.4.8",
     "angular-cookies": "~1.4.8",
+    "angular-froala": "^2.0.1",
     "angular-messages": "~1.4.8",
     "angular-mocks": "~1.4.8",
     "angular-sanitize": "^1.4.8",
@@ -56,10 +57,12 @@
     "babel-polyfill": "^6.3.14",
     "babel-runtime": "^6.3.13",
     "bluebird": "^3.0.6",
+    "gulp-sourcemaps": "^1.6.0",
     "jquery": "^2.1.4",
     "lodash": "~3.10.1",
     "modernizr": "^3.2.0",
     "ng-file-upload": "^11.0.0",
+    "textAngular": "^1.4.6",
     "three.js": "~0.73.0"
   }
 }

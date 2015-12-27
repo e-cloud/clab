@@ -14,5 +14,6 @@ let angular = require('angular')
 angular.module('app.common', [
         'app.constant',
         'app.config',
-        'app.directive'
+        'app.directive',
+        'app.service'
     ])

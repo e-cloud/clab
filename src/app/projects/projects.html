@@ -4,7 +4,7 @@
         <ul class="project-list">
             <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 project-item"
                 ng-repeat="item in projectList track by $index">
-                <a class="thumbnail" ui-sref="detail({projectId:item.id})">
+                <a class="thumbnail" href="" ng-click="projects.viewProject(item.id)">
                     <img ng-src="{{item.imageUrl}}" alt="item.name">
 
                     <div class="project-caption">

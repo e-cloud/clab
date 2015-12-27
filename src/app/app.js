@@ -8,7 +8,6 @@ import './home/home'
 import './about/about'
 import './contact/contact'
 import './projects/projects'
-import './projectTpl/project'
 
 import bootstrap from './bootstrap'
 
@@ -32,8 +31,7 @@ let app = angular.module('app', [
         'app.home',
         'app.about',
         'app.contact',
-        'app.projects',
-        'app.project'
+        'app.projects'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
         /*$stateProvider.state('root', {
@@ -45,8 +43,8 @@ let app = angular.module('app', [
         })*/
 
         $urlRouterProvider.otherwise(function ($injector) {
-            var $state = $injector.get("$state");
-            var defaultState = $injector.get("defaultState");
+            let $state = $injector.get("$state");
+            let defaultState = $injector.get("defaultState");
             $state.go(defaultState);
         })
     })
