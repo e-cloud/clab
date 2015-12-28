@@ -28,7 +28,7 @@ module.exports = {
         path: path.join(__dirname, "dist"),
         publicPath: "/",
         filename: "[name].js",
-        libraryTarget: "umd"
+        //libraryTarget: "global"
     },
     debug: false,
     devtool: 'source-map',

@@ -19,6 +19,9 @@ require('angular-messages')
 require('angular-cookies')
 require('ng-file-upload')
 
+require('textAngular/dist/textAngular-sanitize.min')
+require('../lib/textAngular.js')
+
 let _ = require('lodash')
 let angular = require('angular')
 let app = angular.module('admin', [
@@ -28,6 +31,7 @@ let app = angular.module('admin', [
         'ui.router',
         'ui.bootstrap',
         'ngFileUpload',
+        'textAngular',
 
         'admin.common',
 

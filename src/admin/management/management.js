@@ -16,6 +16,9 @@ angular.module('admin.management', [])
             data: {pageTitle: 'management'}
         })
     })
+    .run(function (taOptions) {
+        taOptions.toolbar[3]=_.without(taOptions.toolbar[3], 'insertImage', 'insertVideo')
+    })
     .controller('ManagementController', function ($scope, $timeout, projectModal) {
 
         var vm = this
@@ -50,6 +53,7 @@ angular.module('admin.management', [])
                 template: require('./project-modal.html'),
                 controller: 'ProjectModalController',
                 controllerAs: 'pmc',
+                backdrop: 'static',
                 size: 'lg',
                 resolve: {
                     project: function () {
@@ -64,8 +68,8 @@ angular.module('admin.management', [])
             open: open
         }
     })
+
     .controller('ProjectModalController', function ($scope, project) {
-        $scope.hi = 'hello'
         $scope.data = angular.copy(project)
     })
 

@@ -5,35 +5,30 @@
 <div class="modal-body ">
     <form class="form" name="createForm">
         <div class="form-group">
-            <label for="name" class="control-label">Project Name</label>
+            <label for="name">Project Name</label>
 
-
-                <input type="text" class="form-control" name="name" id="name" ng-model="data.name"
-                       maxlength="20" required>
-
+            <input type="text" class="form-control" name="name" id="name" ng-model="data.name"
+                   maxlength="20" required>
         </div>
         <div class="form-group">
-            <label for="desc" class="col-sm-3 control-label">Description</label>
+            <label for="desc">Description</label>
 
-            <text-angular id="desc" ng-model="htmlVariable"></text-angular>
+            <text-angular id="desc" ng-model="data.description" required></text-angular>
         </div>
         <div class="form-group">
-            <label for="file" class="col-sm-3 control-label">Choose image</label>
+            <label for="file">Choose image</label>
 
-            <div class="col-sm-8">
-                <div class="input-group">
-                    <input class="form-control" id="file" name="file" ng-model="data.file.name" disabled/>
+            <div class="input-group">
+                <input class="form-control" id="file" name="file" ng-model="data.file.name" disabled/>
 
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary" ng-model="data.file" ngf-select ngf-accept="'.jpg,.jpeg,.png'"
-                                accept=".jpg,.jpeg,.png">
-                            <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Browse
-                        </button>
-                    </div>
+                <div class="input-group-btn">
+                    <button class="btn btn-primary" ng-model="data.file" ngf-select ngf-accept="'.jpg,.jpeg,.png'"
+                            accept=".jpg,.jpeg,.png">
+                        <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Browse
+                    </button>
                 </div>
             </div>
         </div>
-
     </form>
 </div>
 <div class="modal-footer">
