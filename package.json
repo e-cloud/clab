@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "echo 'Open http://localhost:4003/index-dev.html'; webpack-dev-server --config webpack-dev-server.config.js --hot --progress --colors --port 4003 --content-base ."
   },
+  "repository": "https://github.com/e-cloud/clab.git",
   "author": "e-cloud",
   "license": "MIT",
   "devDependencies": {
@@ -23,13 +24,13 @@
     "eslint-loader": "^1.1.1",
     "exports-loader": "^0.6.2",
     "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^2.3.1",
+    "gulp-autoprefixer": "^3.1.0",
     "gulp-bump": "^1.0.0",
     "gulp-complexity": "^0.3.2",
     "gulp-csslint": "^0.2.0",
     "gulp-data": "^1.2.1",
     "gulp-imagemin": "^2.4.0",
-    "gulp-load-plugins": "1.0.0",
+    "gulp-load-plugins": "1.1.0",
     "gulp-minify-css": "^1.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
@@ -48,7 +49,6 @@
     "angular": "~1.4.8",
     "angular-animate": "~1.4.8",
     "angular-cookies": "~1.4.8",
-    "angular-froala": "^2.0.1",
     "angular-messages": "~1.4.8",
     "angular-mocks": "~1.4.8",
     "angular-sanitize": "^1.4.8",
@@ -62,7 +62,7 @@
     "lodash": "~3.10.1",
     "modernizr": "^3.2.0",
     "ng-file-upload": "^11.0.0",
-    "textAngular": "^1.4.6",
+    "textangular": "^1.4.6",
     "three.js": "~0.73.0"
   }
 }

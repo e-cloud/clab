@@ -19,7 +19,7 @@ require('angular-messages')
 require('angular-cookies')
 require('ng-file-upload')
 
-require('textAngular/dist/textAngular-sanitize.min')
+require('textangular/dist/textAngular-sanitize.min')
 require('../lib/textAngular.js')
 
 let _ = require('lodash')

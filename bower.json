@@ -2,6 +2,7 @@
   "name": "clab",
   "description": "creative lab",
   "main": "index.js",
+  "repository": "https://github.com/e-cloud/clab.git",
   "authors": [
     "e-cloud"
   ],

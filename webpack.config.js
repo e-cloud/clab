@@ -13,15 +13,15 @@ PROJECT_CONFIG.browserSyncPlugin = new BrowserSyncPlugin({
 
 // Builds bundle usable inside <script>.
 module.exports = {
-    context: __dirname,
+    context: path.resolve(__dirname, './src'),
     entry: {
         main: [
             'babel-polyfill',
-            './src/app/app.js'
+            './app/app.js'
         ],
         'admin/main': [
             'babel-polyfill',
-            './src/admin/app.js'
+            './admin/app.js'
         ]
     },
     output: {
@@ -48,13 +48,13 @@ module.exports = {
             {
                 test: /\.js?$/,
                 include: [
-                    path.resolve(__dirname, "src")
+                    path.resolve(__dirname, "./src")
                 ],
-                loaders: ['ng-annotate', 'babel-loader', 'eslint-loader']
+                loaders: ['ng-annotate-loader', 'babel-loader', 'eslint-loader']
             }, {
                 test: /\.html/,
                 include: [
-                    path.resolve(__dirname, "src")
+                    path.resolve(__dirname, "./src")
                 ],
                 loader: 'raw!html-minify'
             }
@@ -84,5 +84,8 @@ module.exports = {
         empty: true,        // KEEP empty attributes
         cdata: false,        // KEEP CDATA from scripts
         comments: false     // KEEP comments
+    },
+    node: {
+        __dirname: true
     }
 }
