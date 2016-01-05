@@ -7,4 +7,4 @@ let angular = require('angular')
 
 angular.module('app.constant', [])
     .constant('DEBUG_MODE', __DEV__)
-    .constant('AppName', 'Creative Lab')
+    .constant('AppName', 'JETS Lab')
