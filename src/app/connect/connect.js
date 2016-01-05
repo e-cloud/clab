@@ -5,11 +5,11 @@
 
 let angular = require('angular')
 
-angular.module('app.contact', [])
+angular.module('app.connect', [])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider.state('connect', {
             url: '/connect',
-            template: require('./contact.html'),
+            template: require('./connect.html'),
             controller: 'ConnectController',
             controllerAs: 'connect',
             data: {pageTitle: 'connect'}

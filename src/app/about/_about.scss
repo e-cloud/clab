@@ -1,5 +1,8 @@
 .about {
     margin: 3rem 10rem;
+    .introduction {
+        font-size: 1.25em;
+    }
 }
 
 .figure {
@@ -46,11 +49,12 @@
     }
 }
 
-@media  (min-width: $screen-tablet) and (max-width: $screen-desktop) {
+@media (min-width: $screen-tablet) and (max-width: $screen-desktop) {
     .about {
         margin: 3rem 5rem;
     }
 }
+
 @media (min-width: $screen-desktop) {
     .figure {
         //height: 30vh;

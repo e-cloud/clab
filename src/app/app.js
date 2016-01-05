@@ -6,7 +6,7 @@ import './common/common'
 
 import './home/home'
 import './about/about'
-import './contact/contact'
+import './connect/connect'
 import './projects/projects'
 
 import bootstrap from './bootstrap'
@@ -30,7 +30,7 @@ let app = angular.module('app', [
 
         'app.home',
         'app.about',
-        'app.contact',
+        'app.connect',
         'app.projects'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
