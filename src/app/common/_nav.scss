@@ -15,20 +15,23 @@ $navbar-default-toggle-hover-bg: white;
 $navbar-default-toggle-icon-bar-bg: white;
 $navbar-default-border: white;
 
+$navbar-brand-shadow-color: #3482AA;
+
 .navbar-custom {
     border: none;
     margin: 3rem;
     font-size: 1.25rem;
 
     .navbar-brand {
-        color: #DCA756;
-        text-shadow: 1px 0 0 #0C0C0C, 2px 1px 0 #0C0C0C, 3px 1px 0 #0C0C0C, 4px 2px 0 #0C0C0C, 5px 2px 0 #000000;
-        font-size: 4rem;
+        color: #BAF2FF;
+        text-shadow: -1px 0 0 $navbar-brand-shadow-color, -2px -1px 0 $navbar-brand-shadow-color, -3px -1px 0 $navbar-brand-shadow-color, -4px -2px 0 $navbar-brand-shadow-color, -5px -2px 0 $navbar-brand-shadow-color;
+        font-family: Georgia, Times New Roman;
+        font-size: 5rem;
         transition: all .15s ease-in-out;
         &:hover,
         &:focus {
             color: $navbar-default-brand-hover-color;
-            //background-color: $navbar-default-brand-hover-bg;
+            text-shadow: 1px 1px 8px grey;
         }
     }
 
@@ -214,5 +217,31 @@ $navbar-default-border: white;
         opacity: 1;
         top: 120%;
         transform: scale(1);
+    }
+}
+
+.navbar-brand.expanding {
+    font-size: 2em;
+    min-width: 400px;
+    .expandable {
+        color: #87E8FF;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .navbar-brand.expanding {
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (max-width: $screen-lg-desktop) {
+    .navbar-brand.expanding {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (max-width: $screen-tablet) {
+    .navbar-brand.expanding {
+        font-size: 1.5em;
     }
 }

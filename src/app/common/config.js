@@ -12,7 +12,7 @@ angular.module('app.config', [])
     .config(function ($httpProvider, DEBUG_MODE) {
         // push an interceptor into the queue
         //$httpProvider.interceptors.push('HttpInterceptor')
-        //$httpProvider.defaults.withCredentials = DEBUG_MODE
+        $httpProvider.defaults.withCredentials = true
     })
 
 
@@ -90,10 +90,10 @@ angular.module('app.config', [])
     /* -----------------------------------------------------------
      * 设置非法路径跳转
      * ----------------------------------------------------------- */
-    .config(function ($urlRouterProvider) {
-        /* $urlRouterProvider.otherwise(function ($injector) {
-         var $state = $injector.get("$state");
-         var defaultState = $injector.get("defaultState");
-         $state.go(defaultState);
-         })*/
+    .config(function ($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise(function ($injector) {
+            let $state = $injector.get("$state");
+            let defaultState = $injector.get("defaultState");
+            $state.go(defaultState);
+        })
     })

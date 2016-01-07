@@ -10,6 +10,12 @@ angular.module('app.service', [])
         project: '/project',
         image: '/file'
     })
+    .constant('baseAddress', '//45.79.133.245/v1')
+    .config(function (ServerAPI, baseAddress) {
+        angular.forEach(ServerAPI, function(api, name){
+            ServerAPI[name] = baseAddress + api
+        })
+    })
     .factory('projectManager', function ($log, $q, netWorkService) {
 
         let projectList = {}
@@ -53,14 +59,6 @@ angular.module('app.service', [])
 
         function getProject(id) {
             let d = $q.defer()
-
-            return {
-                id: id,
-                name: 'hello world',
-                imageUrl: './asset/spock.jpg',
-                description: 'I am spock. hello, guys'
-            }
-
 
             netWorkService.getProject(id)
                 .then(function done(rs) {
@@ -144,7 +142,7 @@ angular.module('app.service', [])
         function getProject(id) {
             let d = $q.defer()
 
-            $http.get(ServerAPI.project + 't?id=' + id)
+            $http.get(ServerAPI.project + '?id=' + id)
                 .success(function (rs) {
                     d.resolve(rs)
                 })

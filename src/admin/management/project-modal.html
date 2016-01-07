@@ -19,19 +19,24 @@
             <label for="file">Choose image</label>
 
             <div class="input-group">
-                <input class="form-control" id="file" name="file" ng-model="data.file.name" disabled/>
+                <input class="form-control" id="file" name="file" ng-model="data.file.name" required disabled/>
 
                 <div class="input-group-btn">
-                    <button class="btn btn-primary" ng-model="data.file" ngf-select ngf-accept="'.jpg,.jpeg,.png'"
+                    <button class="btn btn-info" ng-model="data.file" ngf-select ngf-accept="'.jpg,.jpeg,.png'"
                             accept=".jpg,.jpeg,.png">
                         <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Browse
+                    </button>
+
+                    <button class="btn btn-primary" ng-disabled="createForm.file.$invalid" ng-click="createForm.file.$valid&&upload()">
+                        <span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload
                     </button>
                 </div>
             </div>
         </div>
+        <input class="hidden" type="text" ng-model="data.imageUrl" name="imageUrl" required>
     </form>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" ng-click="$dismiss('cancel')">Cancel</button>
-    <button type="submit" class="btn btn-success" ng-disabled="createForm.$invalid">Save</button>
+    <button type="submit" class="btn btn-success" ng-disabled="createForm.$invalid" ng-click="createForm.$valid&&save()">Save</button>
 </div>

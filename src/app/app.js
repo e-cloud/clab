@@ -33,14 +33,6 @@ let app = angular.module('app', [
         'app.connect',
         'app.projects'
     ])
-    .config(function ($stateProvider, $urlRouterProvider) {
-
-        $urlRouterProvider.otherwise(function ($injector) {
-            let $state = $injector.get("$state");
-            let defaultState = $injector.get("defaultState");
-            $state.go(defaultState);
-        })
-    })
 
     .controller('RootController', function ($scope) {
         $scope.hello = 'hello'

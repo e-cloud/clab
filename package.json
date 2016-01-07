@@ -27,6 +27,7 @@
     "gulp-autoprefixer": "^3.1.0",
     "gulp-bump": "^1.0.0",
     "gulp-complexity": "^0.3.2",
+    "file-loader": "^0.8.5",
     "gulp-csslint": "^0.2.0",
     "gulp-data": "^1.2.1",
     "gulp-imagemin": "^2.4.0",
@@ -43,7 +44,11 @@
     "raw-loader": "^0.5.1",
     "run-sequence": "^1.1.5",
     "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.14.0"
+    "webpack-dev-server": "^1.14.0",
+    "url-loader": "^0.5.7",
+    "html-loader": "^0.4.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "html-webpack-plugin": "^1.7.0"
   },
   "dependencies": {
     "angular": "~1.4.8",
@@ -52,21 +57,17 @@
     "angular-messages": "~1.4.8",
     "angular-mocks": "~1.4.8",
     "angular-sanitize": "^1.4.8",
+    "angular-toastr": "^1.6.0",
     "angular-ui-bootstrap": "^0.13.2",
     "angular-ui-router": "~0.2.15",
     "babel-polyfill": "^6.3.14",
     "babel-runtime": "^6.3.13",
     "bluebird": "^3.0.6",
-    "file-loader": "^0.8.5",
-    "gulp-sourcemaps": "^1.6.0",
-    "html-loader": "^0.4.0",
-    "html-webpack-plugin": "^1.7.0",
     "jquery": "^2.1.4",
     "lodash": "~3.10.1",
     "modernizr": "^3.2.0",
     "ng-file-upload": "^11.0.0",
     "textangular": "^1.4.6",
-    "three.js": "~0.73.0",
-    "url-loader": "^0.5.7"
+    "three.js": "~0.73.0"
   }
 }

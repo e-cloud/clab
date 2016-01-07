@@ -11,4 +11,11 @@
     th {
         font-size: 1.25rem;
     }
+    .text-ellipsis {
+        max-width: 500px;
+        width: 400px
+    }
+    .table>tbody>tr>td {
+        vertical-align: middle;
+    }
 }

@@ -63,7 +63,5 @@ angular.module('app.home', [])
 
                 $timeout(randomImage, _.random(3, 6, true) * 1000)
             }, 800)
-
         }
-
     })

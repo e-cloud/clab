@@ -17,11 +17,11 @@ angular.module('admin.management', [])
         })
     })
     .run(function (taOptions) {
-        taOptions.toolbar[3]=_.without(taOptions.toolbar[3], 'insertImage', 'insertVideo')
+        taOptions.toolbar[3] = _.without(taOptions.toolbar[3], 'insertImage', 'insertVideo')
     })
-    .controller('ManagementController', function ($scope, $timeout, projectModal) {
+    .controller('ManagementController', function ($scope, $timeout, projectModal, projectManager, toastr) {
 
-        var vm = this
+        let vm = this
         $scope.hi = 'hello'
 
         $timeout(function () {
@@ -36,15 +36,50 @@ angular.module('admin.management', [])
             vm.projects = list
         }, 1000)
 
+        function getProjectList() {
+            projectManager.getProjectList()
+                .then(function (data) {
+                    vm.projects = data
+                })
+        }
+
         vm.updateProject = function (project) {
             projectModal.open(project)
+                .then(function (data) {
+                    projectManager.updateProject(data)
+                        .then(function () {
+
+                        }, function () {
+
+                        })
+                }, function () {
+
+                })
         }
 
         vm.createProject = function (project) {
             projectModal.open(project)
+                .then(function (data) {
+                    projectManager.createProject(data)
+                        .then(function () {
+
+                        }, function () {
+
+                        })
+                }, function () {
+
+                })
+        }
+
+        vm.deleteProject = function (project) {
+            projectManager.deleteProject(project.id)
+                .then(function () {
+
+                }, function () {
+
+                })
         }
     })
-
 
     .factory('projectModal', function ($modal) {
         function open(project) {
@@ -69,8 +104,29 @@ angular.module('admin.management', [])
         }
     })
 
-    .controller('ProjectModalController', function ($scope, project) {
-        $scope.data = angular.copy(project)
+    .controller('ProjectModalController', function ($scope, $modalInstance, project, ServerAPI, Upload) {
+        let vm = this
+        $scope.data = _.clone(project, true)
+
+        $scope.upload = upload
+
+        $scope.save = function (){
+            $modalInstance.close($scope.data)
+        }
+
+        function upload() {
+            Upload.upload({
+                url: ServerAPI.image,
+                fields: {filename: $scope.data.file.name},
+                fileFormDataName: 'upload_file',
+                file: $scope.data.file,
+                timeout: 15 * 1000
+            }).success(function (rs) {
+                $scope.data.imageUrl = rs.url
+            }).error(function (rs) {
+
+            })
+        }
     })
 
 

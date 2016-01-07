@@ -16,6 +16,7 @@ require('angular-ui-router')
 require('angular-ui-bootstrap')
 require('angular-animate')
 require('angular-messages')
+require('angular-toastr')
 require('angular-cookies')
 require('ng-file-upload')
 
@@ -32,6 +33,7 @@ let app = angular.module('admin', [
         'ui.bootstrap',
         'ngFileUpload',
         'textAngular',
+        'toastr',
 
         'admin.common',
 

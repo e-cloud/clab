@@ -1,9 +1,9 @@
-var styleBuffer = '';
-var fullTextStorage = {};
+let styleBuffer = '';
+let fullTextStorage = {};
 
 module.exports = function writeChar(el, char, style) {
     // Grab text. We buffer it in storage so we don't have to read from the DOM every iteration.
-    var fullText = fullTextStorage[el.id];
+    let fullText = fullTextStorage[el.id];
     if (!fullText) fullText = fullTextStorage[el.id] = el.innerHTML;
 
     fullText = module.exports.handleChar(fullText, char);
