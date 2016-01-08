@@ -34,27 +34,41 @@ let app = angular.module('app', [
         'app.projects'
     ])
 
-    .controller('RootController', function ($scope) {
-        $scope.hello = 'hello'
-    })
-
     .run(function ($rootScope, $log, $state, AppName) {
         $rootScope.$on('$stateChangeSuccess', function () {
             $rootScope.pageTitle = $state.current.data.pageTitle + ' - ' + AppName
         })
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams, fromState, fromStateParams) {
-
             $log.debug({
                 'toState': JSON.stringify(toState),
                 'fromState': JSON.stringify(fromState)
             })
+        })
 
+        $rootScope.$on('DataLoading', function () {
+            $rootScope.loading = true
+        })
+
+        $rootScope.$on('DataLoaded', function () {
+            $rootScope.loading = false
         })
     })
 
-    .run(function ($templateCache) {
-        $templateCache.put("nav.tpl.html", require('./common/nav.html'))
+    /* -----------------------------------------------------------
+     * fix the ie 10-11 scroll bar overlaying
+     * ----------------------------------------------------------- */
+    .run(function () {
+
+        if (/(IEMobile\/10\.0)|(rv:11)|(MSIE\s*10)/.test(navigator.userAgent)) {
+            var msViewPortStyle = document.createElement('style')
+            msViewPortStyle.appendChild(
+                document.createTextNode(
+                    '@-ms-viewport{width:auto!important}'
+                )
+            )
+            document.querySelector('head').appendChild(msViewPortStyle)
+        }
     })
 
 bootstrap(app)

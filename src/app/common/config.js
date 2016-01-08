@@ -12,7 +12,7 @@ angular.module('app.config', [])
     .config(function ($httpProvider, DEBUG_MODE) {
         // push an interceptor into the queue
         //$httpProvider.interceptors.push('HttpInterceptor')
-        $httpProvider.defaults.withCredentials = true
+        $httpProvider.defaults.withCredentials = DEBUG_MODE
     })
 
 

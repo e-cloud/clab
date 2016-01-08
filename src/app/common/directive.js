@@ -23,10 +23,6 @@ angular.module('app.directive', [])
         }
     })
     .directive('expandable', function () {
-        let endOfSentence = /[\.\?!]\s$/;
-        let comma = /\D,\s$/;
-        let endOfBlock = /[^\/]\n\n$/;
-        let cancelSignal = false
 
         function writeTo(el, message, index, interval, charsPerInterval) {
             // Write a character or multiple characters to the buffer.

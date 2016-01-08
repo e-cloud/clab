@@ -16,30 +16,16 @@ angular.module('app.projects', [])
             data: {pageTitle: 'project gallery'}
         })
     })
-    .controller('ProjectGalleryController', function ($scope, $timeout, projectModal) {
+    .controller('ProjectGalleryController', function ($scope, $timeout, projectModal, projectManager) {
         $scope.hi = 'hello'
         this.viewProject = viewProject
 
         $scope.$on('$viewContentLoaded', function () {
-
-            $timeout(function () {
-                random()
-            }, 800)
-            //$interval(random, 3000)
-        })
-
-        function random() {
-            let list = []
-            _.times(_.random(5, 15), function (n) {
-                list.push({
-                    id: n,
-                    name: 'hello world',
-                    imageUrl: './asset/spock.jpg',
-                    description: 'I am spock. hello, guys'
+            projectManager.getList()
+                .then(function (data) {
+                    $scope.projectList = data
                 })
-            })
-            $scope.projectList = list
-        }
+        })
 
         function viewProject(id) {
             projectModal.open(id)

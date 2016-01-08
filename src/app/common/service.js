@@ -12,7 +12,7 @@ angular.module('app.service', [])
     })
     .constant('baseAddress', '//45.79.133.245/v1')
     .config(function (ServerAPI, baseAddress) {
-        angular.forEach(ServerAPI, function(api, name){
+        angular.forEach(ServerAPI, function (api, name) {
             ServerAPI[name] = baseAddress + api
         })
     })
@@ -36,22 +36,19 @@ angular.module('app.service', [])
                 .then(function done(rs) {
                     $log.debug('getList succeed')
 
-                    rs.data.forEach(function (project, id) {
-                        if (!projectList[id]) {
-                            projectList[id] = {}
+                    rs.forEach(function (project) {
+                        if (!projectList[project.id]) {
+                            projectList[project.id] = project
+                        }else {
+                            _.assign(projectList[project.id], project)
                         }
-                        angular.extend(projectList[id], project)
                     })
 
                     d.resolve(projectList)
 
                 }, function fail(rs) {
-                    if (rs.status === 304) {
-                        d.resolve(projectList)
-                    } else {
-                        $log.error('getList failed', rs)
-                        d.reject(rs)
-                    }
+                    $log.error('getList failed', rs)
+                    d.reject(rs)
                 })
 
             return d.promise
@@ -69,12 +66,8 @@ angular.module('app.service', [])
                     d.resolve(projectList[rs.data.id])
 
                 }, function fail(rs) {
-                    if (rs.status === 304) {
-                        d.resolve(projectList[id])
-                    } else {
-                        $log.error('getProject failed', rs)
-                        d.reject(rs)
-                    }
+                    $log.error('getProject failed', rs)
+                    d.reject(rs)
                 })
 
             return d.promise
@@ -127,7 +120,7 @@ angular.module('app.service', [])
         function getProjectList() {
             let d = $q.defer()
 
-            $http.get(ServerAPI.projectList + '?t=' + Date.now * Math.random())
+            $http.get(ServerAPI.projectList)
                 .success(function (rs) {
                     d.resolve(rs)
                 })

@@ -24,20 +24,10 @@ angular.module('admin.management', [])
         let vm = this
         $scope.hi = 'hello'
 
-        $timeout(function () {
-            let list = []
-            list.length = 20
-            _.fill(list, {
-                id: 2,
-                name: 'hello world',
-                imageUrl: './asset/spock.jpg',
-                description: 'I am spock. hello, guys'
-            })
-            vm.projects = list
-        }, 1000)
+        getProjectList()
 
         function getProjectList() {
-            projectManager.getProjectList()
+            projectManager.getList()
                 .then(function (data) {
                     vm.projects = data
                 })
