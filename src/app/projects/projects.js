@@ -13,7 +13,7 @@ angular.module('app.projects', [])
             template: require('./projects.html'),
             controller: 'ProjectGalleryController',
             controllerAs: 'projects',
-            data: {pageTitle: 'project gallery'}
+            data: { pageTitle: 'project gallery' }
         })
     })
     .controller('ProjectGalleryController', function ($scope, $timeout, projectModal, projectManager) {
@@ -23,7 +23,9 @@ angular.module('app.projects', [])
         $scope.$on('$viewContentLoaded', function () {
             projectManager.getList()
                 .then(function (data) {
-                    $scope.projectList = data
+                    $timeout(function () {
+                        $scope.projectList = data
+                    }, 1000)
                 })
         })
 
@@ -31,9 +33,9 @@ angular.module('app.projects', [])
             projectModal.open(id)
         }
     })
-    .factory('projectModal', function ($modal) {
+    .factory('projectModal', function ($uibModal) {
         function open(projectID) {
-            let modalInstance = $modal.open({
+            let modalInstance = $uibModal.open({
                 animation: true,
                 template: require('./project-modal.html'),
                 controller: 'ProjectModalController',
@@ -45,6 +47,7 @@ angular.module('app.projects', [])
                     }
                 }
             })
+
             return modalInstance.result
         }
 

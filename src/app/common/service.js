@@ -61,9 +61,9 @@ angular.module('app.service', [])
                 .then(function done(rs) {
                     $log.debug('getProject succeed')
 
-                    angular.extend(projectList[rs.data.id], rs.data)
+                    _.assign(projectList[rs.id], rs.data)
 
-                    d.resolve(projectList[rs.data.id])
+                    d.resolve(projectList[rs.id])
 
                 }, function fail(rs) {
                     $log.error('getProject failed', rs)

@@ -71,9 +71,9 @@ angular.module('admin.management', [])
         }
     })
 
-    .factory('projectModal', function ($modal) {
+    .factory('projectModal', function ($uibModal) {
         function open(project) {
-            var modalInstance = $modal.open({
+            var modalInstance = $uibModal.open({
                 animation: true,
                 template: require('./project-modal.html'),
                 controller: 'ProjectModalController',
@@ -94,14 +94,14 @@ angular.module('admin.management', [])
         }
     })
 
-    .controller('ProjectModalController', function ($scope, $modalInstance, project, ServerAPI, Upload) {
+    .controller('ProjectModalController', function ($scope, $uibModalInstance, project, ServerAPI, Upload) {
         let vm = this
         $scope.data = _.clone(project, true)
 
         $scope.upload = upload
 
         $scope.save = function (){
-            $modalInstance.close($scope.data)
+            $uibModalInstance.close($scope.data)
         }
 
         function upload() {
