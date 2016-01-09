@@ -61,8 +61,13 @@ angular.module('app.home', [])
             let rLIndex = _.random(0, list.length - 1)
 
             $timeout(function () {
-                let rGIndex = _.random(0, gallery.length-1)
-                _.assign(gallery[rGIndex], list[rLIndex])
+                let rGIndex = _.random(0, gallery.length - 1)
+                let topLen = vm.shadowGalleryTop.length
+                if (rGIndex >= topLen) {
+                    vm.shadowGalleryBottom[rGIndex - topLen] = list[rLIndex]
+                } else {
+                    vm.shadowGalleryTop[rGIndex] = list[rLIndex]
+                }
 
                 $timeout(randomImage, _.random(3, 6, true) * 1000)
             }, 800)

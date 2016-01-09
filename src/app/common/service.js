@@ -10,13 +10,14 @@ angular.module('app.service', [])
         project: '/project',
         image: '/file'
     })
-    .constant('baseAddress', '//45.79.133.245/v1')
-    .config(function (ServerAPI, baseAddress) {
+    .constant('serverAddress', '//45.79.133.245')
+    .constant('APIVersion', 'v1')
+    .config(function (ServerAPI, APIVersion, serverAddress) {
         angular.forEach(ServerAPI, function (api, name) {
-            ServerAPI[name] = baseAddress + api
+            ServerAPI[name] = `${serverAddress}/${APIVersion}${api}`
         })
     })
-    .factory('projectManager', function ($log, $q, netWorkService) {
+    .factory('projectManager', function ($log, $q, netWorkService, serverAddress, DEBUG_MODE) {
 
         let projectList = {}
 
@@ -37,9 +38,13 @@ angular.module('app.service', [])
                     $log.debug('getList succeed')
 
                     rs.forEach(function (project) {
+
+                        if (DEBUG_MODE) {
+                            project.attr.url = serverAddress + project.attr.url
+                        }
                         if (!projectList[project.id]) {
                             projectList[project.id] = project
-                        }else {
+                        } else {
                             _.assign(projectList[project.id], project)
                         }
                     })
@@ -88,6 +93,7 @@ angular.module('app.service', [])
             return netWorkService.deleteProject(id)
                 .then(function done(rs) {
                     $log.debug('deleteProject succeed')
+                    delete projectList[id]
                     return rs
                 }, function fail(rs) {
                     $log.error('deleteProject failed', rs)
@@ -135,7 +141,7 @@ angular.module('app.service', [])
         function getProject(id) {
             let d = $q.defer()
 
-            $http.get(ServerAPI.project + '?id=' + id)
+            $http.get(ServerAPI.project + '/' + id)
                 .success(function (rs) {
                     d.resolve(rs)
                 })
@@ -149,7 +155,7 @@ angular.module('app.service', [])
         function updateProject(data) {
             let d = $q.defer()
 
-            $http.put(ServerAPI.project, data)
+            $http.put(ServerAPI.project + '/' + data.id, data)
                 .success(function (rs) {
                     d.resolve(rs)
                 })
@@ -163,7 +169,7 @@ angular.module('app.service', [])
         function deleteProject(id) {
             let d = $q.defer()
 
-            $http.delete(ServerAPI.project + '?id=' + id)
+            $http.delete(ServerAPI.project + '/' + id)
                 .success(function (rs) {
                     d.resolve(rs)
                 })

@@ -28,17 +28,6 @@ const DIST_DIR = './dist/'
 const MISC_PATTERN = '/**/*.{css,map,gif,jpg,png,ico,bmp,woff,woff2,xsd,wsdl,svg,mp3,wav}'
 const BOWER_PATH = './bower_components'
 
-
-/*
- * create a webpack's dev compiler
- */
-// modify some webpack config options
-let devConfig = Object.create(WEBPACK_CONFIG)
-devConfig.plugins = devConfig.plugins.concat(new webpack.HotModuleReplacementPlugin())
-// create a single instance of the compiler to allow caching
-let devCompiler = webpack(devConfig)
-
-
 /* -----------------------------------------------------------
  * tasks definition
  * ----------------------------------------------------------- */
@@ -47,7 +36,11 @@ let atomicTasks = {
         // modify some webpack config options
         let buildConfig = Object.create(WEBPACK_CONFIG)
         buildConfig.plugins = buildConfig.plugins.concat([
-            new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})
+            new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+            new webpack.DefinePlugin({
+                //JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
+                __DEV__: PROJECT_CONFIG.debug
+            })
         ])
         // run webpack
         webpack(buildConfig, function (err, stats) {
@@ -67,16 +60,27 @@ let atomicTasks = {
         dep: ['build:style'],
         runner: function (callback) {
             // run webpack
-            devCompiler.run(function (err, stats) {
-                if (err) throw new gUtil.PluginError('webpack:build-dev', err)
-
-                callback()
-            })
+            /*devCompiler.run(function (err, stats) {
+             if (err) throw new gUtil.PluginError('webpack:build-dev', err)
+             })*/
+            callback()
         }
     },
     'webpack-dev-server': function () {
+        /*
+         * create a webpack's dev compiler
+         */
         // modify some webpack config options
-        // let myDevConfig = Object.create(webpackConfig)
+        let devConfig = Object.create(WEBPACK_CONFIG)
+        devConfig.plugins = devConfig.plugins.concat([
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.DefinePlugin({
+                //JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
+                __DEV__: PROJECT_CONFIG.debug
+            })])
+
+        // create a single instance of the compiler to allow caching
+        let devCompiler = webpack(devConfig)
 
         // Start a webpack-dev-server
         new WebpackDevServer(devCompiler, {
@@ -113,9 +117,7 @@ let atomicTasks = {
         }
 
         return gulp.src('src/**/*.scss', {base: 'src'})
-            .pipe(gulpPlugins.sourcemaps.init())
             .pipe(gulpPlugins.sass(styleConfig))
-            .pipe(gulpPlugins.sourcemaps.write('./'))
             .pipe(gulp.dest(DIST_DIR))
     },
     'css:autoPrefix': function () {

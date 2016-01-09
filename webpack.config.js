@@ -71,11 +71,7 @@ module.exports = {
             $: "jquery"
         }),
         //new BowerWebpackPlugin({excludes: /.*\.less/})
-        PROJECT_CONFIG.browserSyncPlugin,
-        new webpack.DefinePlugin({
-            //JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
-            __DEV__: PROJECT_CONFIG.debug
-        })
+        PROJECT_CONFIG.browserSyncPlugin
     ],
     resolve: {
         extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx"]

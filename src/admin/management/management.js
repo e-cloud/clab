@@ -38,7 +38,7 @@ angular.module('admin.management', [])
                 .then(function (data) {
                     projectManager.updateProject(data)
                         .then(function () {
-
+                            getProjectList()
                         }, function () {
 
                         })
@@ -52,7 +52,7 @@ angular.module('admin.management', [])
                 .then(function (data) {
                     projectManager.createProject(data)
                         .then(function () {
-
+                            getProjectList()
                         }, function () {
 
                         })
@@ -64,7 +64,7 @@ angular.module('admin.management', [])
         vm.deleteProject = function (project) {
             projectManager.deleteProject(project.id)
                 .then(function () {
-
+                    getProjectList()
                 }, function () {
 
                 })

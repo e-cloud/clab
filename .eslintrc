@@ -3,7 +3,7 @@
     "rules": {
         "strict": 0,
         "eqeqeq": 1,
-        "curly": 2,
+        "curly": 1,
         "quotes": 0
     },
     "env": {
