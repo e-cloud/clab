@@ -74,7 +74,10 @@ module.exports = {
         PROJECT_CONFIG.browserSyncPlugin
     ],
     resolve: {
-        extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx"]
+        extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx"],
+        alias: {
+            'blueimp-load-image': 'blueimp-load-image/js/load-image.js'
+        }
     },
     'html-minify-loader': {
         empty: true,        // KEEP empty attributes

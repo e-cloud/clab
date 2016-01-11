@@ -41,3 +41,12 @@ angular.module('admin.common', ['admin.constant', 'app.config', 'app.service'])
         })
     })
 
+    /* -----------------------------------------------------------
+     * ladda 配置
+     * ----------------------------------------------------------- */
+    .config(function (laddaProvider) {
+        laddaProvider.setOption({
+            style: 'expand-left'
+        });
+    })
+

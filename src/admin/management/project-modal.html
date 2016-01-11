@@ -3,7 +3,7 @@
     <h4 class="modal-title">Edit a project</h4>
 </div>
 <div class="modal-body ">
-    <form class="form" name="createForm">
+    <form class="form" name="createForm" novalidate>
         <div class="form-group">
             <label for="name">Project Name</label>
 
@@ -16,10 +16,12 @@
             <text-angular id="desc" ng-model="data.attr.description" required></text-angular>
         </div>
         <div class="form-group">
-            <label for="file">Choose image</label>
+            <label for="file">Choose image<span ng-if="!isCreate">(Optional)</span></label>
 
             <div class="input-group">
-                <input class="form-control" id="file" name="file" ng-model="data.file.name" required disabled/>
+                <input class="form-control" id="file" name="file" ng-model="data.file.name" ng-required="isCreate"
+                       ng-change="uploadState.progress = 0"
+                       readonly/>
 
                 <div class="input-group-btn">
                     <button class="btn btn-info" ng-model="data.file" ngf-select ngf-accept="'.jpg,.jpeg,.png'"
@@ -27,16 +29,33 @@
                         <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Browse
                     </button>
 
-                    <button class="btn btn-primary" ng-disabled="createForm.file.$invalid" ng-click="createForm.file.$valid&&upload()">
+                    <button class="btn btn-primary" ng-disabled="!createForm.file.$viewValue"
+                            ng-click="createForm.file.$valid&&upload()"
+                            ladda='uploadState.loading' data-style="zoom-in">
                         <span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload
                     </button>
                 </div>
             </div>
         </div>
-        <input class="hidden" type="text" ng-model="data.imageUrl" name="imageUrl" required>
+
+        <div class="form-group">
+            <uib-progressbar class="progress-striped"
+                             ng-class="{'active': uploadState.loading}"
+                             value="uploadState.progress" type="{{uploadState.type}}">
+                <b>{{uploadState.progress}}%</b>
+            </uib-progressbar>
+        </div>
+
+        <input class="hidden" type="text" ng-model="data.imageUrl" name="imageUrl" ng-required="isCreate">
+
+        <div class="center">
+            <img ng-src="{{serverAddress + (data.imageUrl|| data.attr.url)}}">
+        </div>
     </form>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" ng-click="$dismiss('cancel')">Cancel</button>
-    <button type="submit" class="btn btn-success" ng-disabled="createForm.$invalid" ng-click="createForm.$valid&&save()">Save</button>
+    <button type="submit" class="btn btn-success" ng-disabled="createForm.$invalid || createForm.$pristine"
+            ng-click="createForm.$valid&&save()">Save
+    </button>
 </div>

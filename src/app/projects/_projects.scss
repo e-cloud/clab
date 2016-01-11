@@ -41,11 +41,17 @@
     box-shadow: 1px 1px 15px #444040;
     position: relative;
     overflow: hidden;
+    min-height: 200px;
     &:hover {
         .project-name, .project-description {
             opacity: 1;
             transform: translateY(0);
         }
+    }
+
+    .pic {
+        min-height: 200px;
+        max-height: 400px;
     }
 }
 
@@ -72,13 +78,21 @@
 .project-name {
     top: 0;
     transform: translateY(-100%);
+    h3 {
+        margin: 15px 0;
+    }
 }
 
 .project-description {
     bottom: 0;
+    padding: 5px 0;
     transform: translateY(100%);
     p {
         margin: 10px 0;
     }
+}
+
+.modal .project-img-box {
+    margin: 1em 0;
 }
 

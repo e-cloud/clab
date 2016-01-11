@@ -15,5 +15,6 @@ angular.module('app.common', [
         'app.constant',
         'app.config',
         'app.directive',
+        'app.filter',
         'app.service'
     ])

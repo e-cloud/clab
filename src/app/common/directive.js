@@ -6,6 +6,7 @@
 let angular = require('angular')
 let $ = require('jquery')
 let writeChar = require('../../lib/writeChar')
+let loadImage = require('blueimp-load-image')
 
 angular.module('app.directive', [])
     .directive('mainLayout', function () {
@@ -71,3 +72,40 @@ angular.module('app.directive', [])
             }
         }
     })
+    .directive('imageLoader', function ($q, $animateCss) {
+        return {
+            restrict: 'A',
+            scope: {
+                imageLoader: '='
+            },
+            template: require('./loader.html'),
+            link: function ($scope, $elem, $attr) {
+
+                $scope.$watch('imageLoader', function (newVal) {
+                    if (!newVal) return
+
+                    load(newVal)
+                        .then(function () {
+                            $elem.css('background-image', `url(${newVal})`)
+                        }, function () {
+
+                        })
+
+
+                })
+            }
+        }
+
+        function load(url) {
+            let d = $q.defer()
+            loadImage(url, function (img) {
+                if (img.type === "error") {
+                    d.reject()
+                } else {
+                    d.resolve()
+                }
+            })
+            return d.promise
+        }
+    })
+

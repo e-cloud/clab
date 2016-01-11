@@ -13,7 +13,7 @@ angular.module('admin.management', [])
             template: require('./management.html'),
             controller: 'ManagementController',
             controllerAs: 'management',
-            data: {pageTitle: 'management'}
+            data: { pageTitle: 'management' }
         })
     })
     .run(function (taOptions) {
@@ -34,27 +34,35 @@ angular.module('admin.management', [])
         }
 
         vm.updateProject = function (project) {
-            projectModal.open(project)
-                .then(function (data) {
-                    projectManager.updateProject(data)
+            projectModal.open({ project: project })
+                .then(function (res) {
+                    let data = res.attr
+                    if (res.imageUrl) {
+                        data.url = res.imageUrl
+                    }
+                    projectManager.updateProject(project.id, data)
                         .then(function () {
+                            toastr.success('update project info successfully')
                             getProjectList()
                         }, function () {
-
+                            toastr.error('update project failed, try again')
                         })
                 }, function () {
 
                 })
         }
 
-        vm.createProject = function (project) {
-            projectModal.open(project)
-                .then(function (data) {
+        vm.createProject = function () {
+            projectModal.open({ project: {}, isCreate: true })
+                .then(function (res) {
+                    let data = res.attr
+                    data.url = res.imageUrl
                     projectManager.createProject(data)
                         .then(function () {
+                            toastr.success(`create project <${data.name}> successfully`)
                             getProjectList()
                         }, function () {
-
+                            toastr.error(`create project <${data.name}> failed, try again`)
                         })
                 }, function () {
 
@@ -64,15 +72,16 @@ angular.module('admin.management', [])
         vm.deleteProject = function (project) {
             projectManager.deleteProject(project.id)
                 .then(function () {
+                    toastr.success(`delete project <${project.attr.name}> successfully`)
                     getProjectList()
                 }, function () {
-
+                    toastr.error(`delete project <${project.attr.name}> failed, try again`)
                 })
         }
     })
 
     .factory('projectModal', function ($uibModal) {
-        function open(project) {
+        function open(option) {
             var modalInstance = $uibModal.open({
                 animation: true,
                 template: require('./project-modal.html'),
@@ -81,8 +90,8 @@ angular.module('admin.management', [])
                 backdrop: 'static',
                 size: 'lg',
                 resolve: {
-                    project: function () {
-                        return project
+                    option: function () {
+                        return option
                     }
                 }
             })
@@ -94,28 +103,58 @@ angular.module('admin.management', [])
         }
     })
 
-    .controller('ProjectModalController', function ($scope, $uibModalInstance, project, ServerAPI, Upload) {
+    .controller('ProjectModalController', function ($scope, $log, $uibModalInstance, option, ServerAPI, Upload, toastr, serverAddress, DEBUG_MODE) {
         let vm = this
-        $scope.data = _.clone(project, true)
+        $scope.data = _.clone(option.project, true)
+        $scope.isCreate = option.isCreate
 
         $scope.upload = upload
 
-        $scope.save = function (){
+        $scope.save = function () {
             $uibModalInstance.close($scope.data)
         }
 
+        if (DEBUG_MODE) {
+            $scope.serverAddress = serverAddress + '/'
+        } else {
+            $scope.serverAddress = ''
+        }
+
+        $scope.uploadState = {
+            progress: 0
+        }
+
+        $scope.$on('$destroy', function () {
+            $scope.uploadInstance && $scope.uploadInstance.abort()
+        })
+
         function upload() {
-            Upload.upload({
+            $scope.uploadState.progress = 0
+
+            $scope.uploadInstance = Upload.upload({
                 url: ServerAPI.image,
-                fields: {filename: $scope.data.file.name},
+                fields: { filename: $scope.data.file.name },
                 fileFormDataName: 'upload_file',
                 file: $scope.data.file,
                 timeout: 15 * 1000
-            }).success(function (rs) {
-                $scope.data.imageUrl = rs.url
-            }).error(function (rs) {
-
             })
+
+            $scope.uploadInstance.then(function success(rs) {
+                toastr.success('upload image successfully')
+                $scope.data.imageUrl = rs.data.url
+                $scope.uploadState.type = 'success'
+            }, function error(rs) {
+                toastr.error('upload error, please try again!')
+                $log.debug(rs)
+            }, function notify(evt) {
+                $scope.uploadState.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total))
+                $log.debug(evt)
+            }).finally(function () {
+                $scope.uploadState.loading = false
+            })
+
+            $scope.uploadState.type = 'info'
+            $scope.uploadState.loading = true
         }
     })
 

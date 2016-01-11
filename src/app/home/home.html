@@ -27,8 +27,8 @@
             <ul class="hex-grid">
                 <li class="hex" ng-repeat="item in home.shadowGalleryTop track by $index">
                     <a class="hex-content" href="#" ng-click="home.viewProject(item.id)">
-                        <div class="project-thumbnail" style="background-image: url({{item.attr.url}})"
-                             title="{{item.attr.name}}"></div>
+                        <div class="project-thumbnail" style="background-image: url({{serverAddress+item.attr.url}})"
+                             title="{{item.attr.name}}" image-loader="serverAddress+item.attr.url"></div>
                         <h1>{{item.attr.name}}</h1>
                         <p>{{item.attr.intro}}</p>
                     </a>
@@ -52,8 +52,8 @@
                 </li>
                 <li class="hex" ng-repeat="item in home.shadowGalleryBottom track by $index">
                     <a class="hex-content" href="#" ng-click="home.viewProject(item.id)">
-                        <div class="project-thumbnail" style="background-image: url({{item.attr.url}})"
-                             title="{{item.attr.name}}"></div>
+                        <div class="project-thumbnail" style="background-image: url({{serverAddress+item.attr.url}})"
+                             title="{{item.attr.name}}" image-loader="serverAddress+item.attr.url"></div>
                         <h1>{{item.attr.name}}</h1>
                         <p>{{item.attr.intro}}</p>
                     </a>

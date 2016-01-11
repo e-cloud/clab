@@ -14,13 +14,13 @@ angular.module('app.home', [])
             template: require('./home.html'),
             controller: 'HomeController',
             controllerAs: 'home',
-            data: {pageTitle: 'Home'}
+            data: { pageTitle: 'Home' }
         })
     })
     .constant('defaultState', 'home')
 
-    .controller('HomeController', function ($window, $scope, $timeout, projectModal, projectManager) {
-        let vm = this, gallery, list
+    .controller('HomeController', function ($window, $log, $scope, $timeout, projectModal, projectManager) {
+        let vm = this, list
 
         initMethods()
         initListeners()
@@ -46,10 +46,18 @@ angular.module('app.home', [])
             projectManager.getList()
                 .then(function (data) {
                     list = _.toArray(data)
-                    gallery = list.slice(0, 6)
+                    let gallery = list.slice(0, 6)
+                    let galleryHalfLen = gallery.length / 2
 
-                    vm.shadowGalleryTop = gallery.slice(0, 3)
-                    vm.shadowGalleryBottom = gallery.slice(3, gallery.length)
+                    vm.shadowGalleryTop = gallery.slice(0, galleryHalfLen)
+                    vm.shadowGalleryBottom = gallery.slice(galleryHalfLen, gallery.length)
+
+                    let temp = _.map(list, function (val, id) {
+                        return id
+                    })
+
+                    vm.showingIndexes = temp.slice(0, gallery.length)
+                    vm.candidateindexes = temp.slice(gallery.length, temp.length)
 
                     $timeout(function () {
                         randomImage()
@@ -58,10 +66,12 @@ angular.module('app.home', [])
         }
 
         function randomImage() {
-            let rLIndex = _.random(0, list.length - 1)
+            // get the random candidate project index in list
+            let rLIndex = vm.candidateindexes[_.random(0, vm.candidateindexes.length - 1)]
 
             $timeout(function () {
-                let rGIndex = _.random(0, gallery.length - 1)
+                let rGIndex = _.random(0, vm.showingIndexes.length - 1)
+                let rSIndex = vm.showingIndexes[rGIndex]
                 let topLen = vm.shadowGalleryTop.length
                 if (rGIndex >= topLen) {
                     vm.shadowGalleryBottom[rGIndex - topLen] = list[rLIndex]
@@ -69,7 +79,14 @@ angular.module('app.home', [])
                     vm.shadowGalleryTop[rGIndex] = list[rLIndex]
                 }
 
-                $timeout(randomImage, _.random(3, 6, true) * 1000)
+                vm.showingIndexes = _.without(vm.showingIndexes, rSIndex)
+                vm.showingIndexes.push(rLIndex)
+                vm.candidateindexes = _.without(vm.candidateindexes, rLIndex)
+                vm.candidateindexes.push(rSIndex)
+
+                $log.debug(vm.showingIndexes, vm.candidateindexes)
+
+                $timeout(randomImage, _.random(0, 1, true) * 1000)
             }, 800)
         }
     })

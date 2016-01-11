@@ -24,6 +24,7 @@
     "bootstrap-sass": "~3.3.6",
     "font-awesome": "~4.5.0",
     "foundation": "~5.5.3",
-    "textAngular": "~1.4.6"
+    "textAngular": "~1.4.6",
+    "angular-toastr": "~1.6.0"
   }
 }

@@ -17,7 +17,7 @@ angular.module('app.service', [])
             ServerAPI[name] = `${serverAddress}/${APIVersion}${api}`
         })
     })
-    .factory('projectManager', function ($log, $q, netWorkService, serverAddress, DEBUG_MODE) {
+    .factory('projectManager', function ($log, $q, netWorkService) {
 
         let projectList = {}
 
@@ -38,10 +38,6 @@ angular.module('app.service', [])
                     $log.debug('getList succeed')
 
                     rs.forEach(function (project) {
-
-                        if (DEBUG_MODE) {
-                            project.attr.url = serverAddress + project.attr.url
-                        }
                         if (!projectList[project.id]) {
                             projectList[project.id] = project
                         } else {
@@ -78,8 +74,8 @@ angular.module('app.service', [])
             return d.promise
         }
 
-        function updateProject(data) {
-            return netWorkService.updateProject(data)
+        function updateProject(id, data) {
+            return netWorkService.updateProject(id, data)
                 .then(function done(rs) {
                     $log.debug('updateProject succeed')
                     return rs
@@ -152,10 +148,10 @@ angular.module('app.service', [])
             return d.promise
         }
 
-        function updateProject(data) {
+        function updateProject(id, data) {
             let d = $q.defer()
 
-            $http.put(ServerAPI.project + '/' + data.id, data)
+            $http.put(ServerAPI.project + '/' + id, data)
                 .success(function (rs) {
                     d.resolve(rs)
                 })

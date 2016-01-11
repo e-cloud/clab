@@ -14,6 +14,7 @@ import bootstrap from './bootstrap'
 require('angular-ui-router')
 require('angular-ui-bootstrap')
 require('angular-animate')
+require('angular-sanitize')
 require('angular-messages')
 require('angular-cookies')
 
@@ -22,6 +23,7 @@ let angular = require('angular')
 let app = angular.module('app', [
         'ngCookies',
         'ngAnimate',
+        'ngSanitize',
         'ngMessages',
         'ui.router',
         'ui.bootstrap',
@@ -34,7 +36,7 @@ let app = angular.module('app', [
         'app.projects'
     ])
 
-    .run(function ($rootScope, $log, $state, AppName) {
+    .run(function ($rootScope, $log, $state, AppName, DEBUG_MODE, serverAddress) {
         $rootScope.$on('$stateChangeSuccess', function () {
             $rootScope.pageTitle = $state.current.data.pageTitle + ' - ' + AppName
         })
@@ -53,6 +55,12 @@ let app = angular.module('app', [
         $rootScope.$on('DataLoaded', function () {
             $rootScope.loading = false
         })
+
+        if (DEBUG_MODE) {
+            $rootScope.serverAddress = serverAddress + '/'
+        } else {
+            $rootScope.serverAddress = ''
+        }
     })
 
     /* -----------------------------------------------------------

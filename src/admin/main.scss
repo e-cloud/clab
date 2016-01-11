@@ -1,4 +1,6 @@
 @charset "UTF-8";
+$lib_path: "../../bower_components";
+@import url(#{$lib_path}/angular-toastr/dist/angular-toastr.min.css);
 
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 

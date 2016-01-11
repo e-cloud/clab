@@ -1,7 +1,8 @@
-<nav class="navbar navbar-custom">
+<nav class="navbar navbar-custom" ng-init="isNavTopCollapsed=true;">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" aria-expanded="false" aria-controls="navbar"
+                    ng-click="isNavTopCollapsed=!isNavTopCollapsed">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -10,7 +11,7 @@
             <a class="navbar-brand" ui-sref="home" expandable="Just Environmental Technology and Science">
                 <span class="expandable">JETS</span> Lab</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse" collapse="isNavTopCollapsed">
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active"><a ui-sref="projects">Projects</a></li>
                 <li ui-sref-active="active"><a ui-sref="about">About</a></li>

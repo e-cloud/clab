@@ -16,8 +16,9 @@ require('angular-ui-router')
 require('angular-ui-bootstrap')
 require('angular-animate')
 require('angular-messages')
-require('angular-toastr')
 require('angular-cookies')
+require('angular-toastr')
+require('angular-ladda')
 require('ng-file-upload')
 
 require('textangular/dist/textAngular-sanitize.min')
@@ -34,6 +35,7 @@ let app = angular.module('admin', [
         'ngFileUpload',
         'textAngular',
         'toastr',
+        'angular-ladda',
 
         'admin.common',
 

@@ -11,7 +11,8 @@ $navbar-default-link-active-bg: $navbar-default-brand-hover-bg;
 $navbar-default-link-disabled-color: white;
 $navbar-default-link-disabled-bg: white;
 $navbar-default-toggle-border-color: white;
-$navbar-default-toggle-hover-bg: white;
+$navbar-default-toggle-hover-bg: rgba(0, 0, 0, 0.30);
+;
 $navbar-default-toggle-icon-bar-bg: white;
 $navbar-default-border: white;
 
@@ -23,8 +24,8 @@ $navbar-brand-shadow-color: #3482AA;
     font-size: 1.25rem;
 
     .navbar-brand {
-        color: #BAF2FF;
-        text-shadow: -1px 0 0 $navbar-brand-shadow-color, -2px -1px 0 $navbar-brand-shadow-color, -3px -1px 0 $navbar-brand-shadow-color, -4px -2px 0 $navbar-brand-shadow-color, -5px -2px 0 $navbar-brand-shadow-color;
+        color: #FFFFFF;
+        text-shadow: -1px -1px 2px #000000;
         font-family: Georgia, Times New Roman;
         font-size: 5rem;
         transition: all .15s ease-in-out;
@@ -40,22 +41,18 @@ $navbar-brand-shadow-color: #3482AA;
     }
 
     .navbar-nav {
-        > li {
-            &:nth-child(n+2) {
-                margin-left: 1rem;
-            }
-            > a {
-                color: $navbar-default-link-color;
-                background-color: $navbar-default-bg;
-                transition: all .3s ease-in-out;
+        > li > a {
+            color: $navbar-default-link-color;
+            background-color: $navbar-default-bg;
+            transition: all .3s ease-in-out;
 
-                &:hover,
-                &:focus {
-                    color: $navbar-default-link-hover-color;
-                    background-color: $navbar-default-link-hover-bg;
-                }
+            &:hover,
+            &:focus {
+                color: $navbar-default-link-hover-color;
+                background-color: $navbar-default-link-hover-bg;
             }
         }
+
         > .active > a {
             color: $navbar-default-link-active-color;
             background-color: $navbar-default-brand-hover-bg;
@@ -167,7 +164,6 @@ $navbar-brand-shadow-color: #3482AA;
 }
 
 .contact-dropdown {
-
     &:hover, &:focus {
         .dropdown-menu {
             display: block;
@@ -176,6 +172,7 @@ $navbar-brand-shadow-color: #3482AA;
             //transition: all;
         }
     }
+
     .dropdown-menu {
         background-color: $navbar-default-bg;
         min-width: 120px;
@@ -197,6 +194,13 @@ $navbar-brand-shadow-color: #3482AA;
     .navbar-custom {
         .navbar-brand {
             margin-left: 0;
+        }
+        .navbar-nav {
+            > li {
+                &:nth-child(n+2) {
+                    margin-left: 1rem;
+                }
+            }
         }
     }
 }
@@ -220,11 +224,15 @@ $navbar-brand-shadow-color: #3482AA;
     }
 }
 
+.expandable {
+    color: #21ADF3;
+}
+
 .navbar-brand.expanding {
     font-size: 2em;
     min-width: 400px;
     .expandable {
-        color: #87E8FF;
+        color: #1291FF;
     }
 }
 
@@ -243,5 +251,8 @@ $navbar-brand-shadow-color: #3482AA;
 @media screen and (max-width: $screen-tablet) {
     .navbar-brand.expanding {
         font-size: 1.5em;
+    }
+    .navbar-custom .navbar-collapse {
+        margin-top: .5em;
     }
 }
