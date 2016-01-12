@@ -4,9 +4,11 @@
     <h3 class="modal-title">{{project.attr.name}}</h3>
 </div>
 <div class="modal-body">
+    <h5 class="timestamp">Publish At: {{ project.attr.date | date }}</h5>
+
     <div class="project-img-box text-center">
-        <img ng-src="{{serverAddress+project.attr.url}}" alt="{{project.attr.name}}">
+        <img class="project-img" ng-src="{{serverAddress+project.attr.url}}" alt="{{project.attr.name}}">
     </div>
 
-    <article ng-bind-html="project.attr.description"></article>
+    <article class="modal-project-description" ng-bind-html="project.attr.description"></article>
 </div>

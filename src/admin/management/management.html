@@ -20,7 +20,7 @@
             <tr ng-repeat="project in management.projects track by $index" on-finish-render="repeatDone">
                 <td class="text-center">{{$index + 1}}</td>
                 <td>{{project.attr.name}}</td>
-                <td class="text-ellipsis" ng-bind-html="project.attr.description"></td>
+                <td class="text-ellipsis">{{ project.attr.description }}</td>
                 <td>
                     <button class="btn btn-info" ng-click="management.updateProject(project)">update</button>
                     <button class="btn btn-danger" ng-click="management.deleteProject(project)">delete</button>

@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-show="data.file">
             <uib-progressbar class="progress-striped"
                              ng-class="{'active': uploadState.loading}"
                              value="uploadState.progress" type="{{uploadState.type}}">
@@ -48,8 +48,8 @@
 
         <input class="hidden" type="text" ng-model="data.imageUrl" name="imageUrl" ng-required="isCreate">
 
-        <div class="center">
-            <img ng-src="{{serverAddress + (data.imageUrl|| data.attr.url)}}">
+        <div class="text-center">
+            <img ngf-thumbnail="!data.file.$error && data.file" class="thumb img-responsive" alt="{{data.file.name}}">
         </div>
     </form>
 </div>

@@ -20,7 +20,7 @@ angular.module('app.home', [])
     .constant('defaultState', 'home')
 
     .controller('HomeController', function ($window, $log, $scope, $timeout, projectModal, projectManager) {
-        let vm = this, list
+        let vm = this, list, timeoutSignal
 
         initMethods()
         initListeners()
@@ -33,6 +33,10 @@ angular.module('app.home', [])
                         $window.svg4everybody()
                     })
                 }
+            })
+
+            $scope.$on('$destroy', function () {
+                timeoutSignal && timeoutSignal.cancel()
             })
         }
 
@@ -68,26 +72,23 @@ angular.module('app.home', [])
         function randomImage() {
             // get the random candidate project index in list
             let rLIndex = vm.candidateindexes[_.random(0, vm.candidateindexes.length - 1)]
+            let rGIndex = _.random(0, vm.showingIndexes.length - 1)
+            let rSIndex = vm.showingIndexes[rGIndex]
+            let topLen = vm.shadowGalleryTop.length
+            if (rGIndex >= topLen) {
+                vm.shadowGalleryBottom[rGIndex - topLen] = list[rLIndex]
+            } else {
+                vm.shadowGalleryTop[rGIndex] = list[rLIndex]
+            }
 
-            $timeout(function () {
-                let rGIndex = _.random(0, vm.showingIndexes.length - 1)
-                let rSIndex = vm.showingIndexes[rGIndex]
-                let topLen = vm.shadowGalleryTop.length
-                if (rGIndex >= topLen) {
-                    vm.shadowGalleryBottom[rGIndex - topLen] = list[rLIndex]
-                } else {
-                    vm.shadowGalleryTop[rGIndex] = list[rLIndex]
-                }
+            vm.showingIndexes = _.without(vm.showingIndexes, rSIndex)
+            vm.showingIndexes.push(rLIndex)
+            vm.candidateindexes = _.without(vm.candidateindexes, rLIndex)
+            vm.candidateindexes.push(rSIndex)
 
-                vm.showingIndexes = _.without(vm.showingIndexes, rSIndex)
-                vm.showingIndexes.push(rLIndex)
-                vm.candidateindexes = _.without(vm.candidateindexes, rLIndex)
-                vm.candidateindexes.push(rSIndex)
+            $log.debug(vm.showingIndexes, vm.candidateindexes)
 
-                $log.debug(vm.showingIndexes, vm.candidateindexes)
-
-                $timeout(randomImage, _.random(0, 1, true) * 1000)
-            }, 800)
+            timeoutSignal = $timeout(randomImage, _.random(5, 10, true) * 1000)
         }
     })
 
@@ -107,10 +108,12 @@ function detectIE() {
     // ua = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko';
 
     // IE 12 / Spartan
-    // ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
+    // ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71
+    // Safari/537.36 Edge/12.0';
 
     // Edge (IE 12+)
-    // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
+    // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0
+    // Safari/537.36 Edge/13.10586';
 
     var msie = ua.indexOf('MSIE ');
     if (msie > 0) {
