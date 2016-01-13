@@ -1,8 +1,15 @@
 .about {
     margin: 3rem 10rem;
+    .about-article {
+        font-size: 1em;
+    }
     .introduction {
         font-size: 1.25em;
     }
+}
+
+.about-article > section {
+    margin: 2em 0;
 }
 
 .figure {

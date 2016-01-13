@@ -13,9 +13,16 @@
     }
     .text-ellipsis {
         max-width: 500px;
-        width: 400px
+        min-width: 200px;
+
     }
     .table>tbody>tr>td {
         vertical-align: middle;
     }
+}
+.modal .thumb {
+    max-width: 60%;
+    margin: auto;
+    display: block;
+    height: auto;
 }

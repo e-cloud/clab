@@ -30,7 +30,7 @@
                         <div class="project-thumbnail" style="background-image: url({{serverAddress+item.attr.url}})"
                              title="{{item.attr.name}}" image-loader="serverAddress+item.attr.url"></div>
                         <h1>{{item.attr.name}}</h1>
-                        <p>{{item.attr.intro}}</p>
+                        <p>{{item.attr.brief}}</p>
                     </a>
                 </li>
                 <li class="hex explore">
@@ -55,10 +55,11 @@
                         <div class="project-thumbnail" style="background-image: url({{serverAddress+item.attr.url}})"
                              title="{{item.attr.name}}" image-loader="serverAddress+item.attr.url"></div>
                         <h1>{{item.attr.name}}</h1>
-                        <p>{{item.attr.intro}}</p>
+                        <p>{{item.attr.brief}}</p>
                     </a>
                 </li>
             </ul>
+            <loader class="loader" ng-show="loading"></loader>
         </div>
     </div>
 </div>

@@ -1,14 +1,16 @@
 <div class="modal-header">
     <button type="button" class="close" ng-click="$dismiss('cancel')" title="close"><span
         aria-hidden="true">&times;</span></button>
-    <h3 class="modal-title">{{project.attr.name}}</h3>
+    <h2 class="modal-title text-center">{{project.attr.name}}</h2>
 </div>
 <div class="modal-body">
-    <h5 class="timestamp">Publish At: {{ project.attr.date | date }}</h5>
+    <article class="modal-project">
+        <h5 class="publish-date text-center">Publish At: <span class="timestamp">{{ project.attr.date | date:'MMM d, y h:mm' }}</span></h5>
 
-    <div class="project-img-box text-center">
-        <img class="project-img" ng-src="{{serverAddress+project.attr.url}}" alt="{{project.attr.name}}">
-    </div>
+        <div class="project-img-box text-center">
+            <img class="project-img" ng-src="{{serverAddress+project.attr.url}}" alt="{{project.attr.name}}">
+        </div>
 
-    <article class="modal-project-description" ng-bind-html="project.attr.description"></article>
+        <section class="modal-project-description" ng-bind-html="project.attr.description"></section>
+    </article>
 </div>

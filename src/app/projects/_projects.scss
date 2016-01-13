@@ -48,7 +48,7 @@
     padding: 0;
     margin: 0;
     &:hover {
-        box-shadow: 10px 30px 30px -10px rgba(0,0,0,0.38);
+        box-shadow: 10px 30px 30px -10px rgba(0, 0, 0, 0.38);
         .project-name, .project-description {
             opacity: 1;
             transform: translateY(0);
@@ -56,7 +56,7 @@
     }
 
     &:active {
-        box-shadow: 5px 25px 20px -10px rgba(0,0,0,0.38);
+        box-shadow: 5px 25px 20px -10px rgba(0, 0, 0, 0.38);
         transition: all .1s ease-in-out;
     }
 }
@@ -116,10 +116,17 @@
     .project-img {
         max-width: 90%;
     }
-    .modal-project-description {
+    .modal-project {
         font-size: 1rem;
+        margin: 0 2em;
     }
-    .timestamp {
+    .modal-project-description {
+        p {
+            margin-bottom: 5px;
+        }
+    }
+    .publish-date {
         color: #ABABAB;
+        margin-top: 0;
     }
 }

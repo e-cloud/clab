@@ -8,7 +8,7 @@
                    style="background-image: url({{serverAddress+item.attr.url}})">
                     <div class="project-caption">
                         <div class="project-name"><h3>{{item.attr.name}}</h3></div>
-                        <div class="project-description" ng-bind-html="item.attr.description|limitToPlus:80"></div>
+                        <div class="project-description" ng-bind-html="item.attr.brief"></div>
                     </div>
                 </a>
             </li>

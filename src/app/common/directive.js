@@ -79,7 +79,7 @@ angular.module('app.directive', [])
                 imageLoader: '='
             },
             template: require('./loader.html'),
-            link: function ($scope, $elem, $attr) {
+            link ($scope, $elem, $attr) {
 
                 $scope.$watch('imageLoader', function (newVal) {
                     if (!newVal) return
@@ -90,8 +90,6 @@ angular.module('app.directive', [])
                         }, function () {
 
                         })
-
-
                 })
             }
         }
@@ -106,6 +104,15 @@ angular.module('app.directive', [])
                 }
             })
             return d.promise
+        }
+    })
+    .directive('loader', function () {
+        return {
+            restrict: 'E',
+            template: require('./loader.html'),
+            link ($scope, $elem, $attr) {
+
+            }
         }
     })
 

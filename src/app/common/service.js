@@ -58,18 +58,7 @@ angular.module('app.service', [])
         function getProject(id) {
             let d = $q.defer()
 
-            netWorkService.getProject(id)
-                .then(function done(rs) {
-                    $log.debug('getProject succeed')
-
-                    _.assign(projectList[rs.id], rs.data)
-
-                    d.resolve(projectList[rs.id])
-
-                }, function fail(rs) {
-                    $log.error('getProject failed', rs)
-                    d.reject(rs)
-                })
+            d.resolve(projectList[id])
 
             return d.promise
         }

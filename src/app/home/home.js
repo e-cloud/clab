@@ -47,6 +47,17 @@ angular.module('app.home', [])
         }
 
         function initScope() {
+            let gallery = _.fill([], {}, 0, 6)
+            let galleryHalfLen = gallery.length / 2
+
+            vm.shadowGalleryTop = gallery.slice(0, galleryHalfLen)
+            vm.shadowGalleryBottom = gallery.slice(galleryHalfLen, gallery.length)
+
+            initGallery()
+        }
+
+        function initGallery() {
+            $scope.loading = true
             projectManager.getList()
                 .then(function (data) {
                     list = _.toArray(data)
@@ -63,9 +74,12 @@ angular.module('app.home', [])
                     vm.showingIndexes = temp.slice(0, gallery.length)
                     vm.candidateindexes = temp.slice(gallery.length, temp.length)
 
-                    $timeout(function () {
+                    gallery.length > 6 && $timeout(function () {
                         randomImage()
                     }, 1000)
+                })
+                .finally(function () {
+                    $scope.loading = false
                 })
         }
 
