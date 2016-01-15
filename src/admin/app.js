@@ -47,7 +47,7 @@ let app = angular.module('admin', [
         $scope.hello = 'hello'
     })
 
-    .run(function ($rootScope, $log, $state, AppName) {
+    .run(function ($rootScope, $log, $state, AppName, projectManager) {
         $rootScope.$on('$stateChangeSuccess', function () {
             $rootScope.pageTitle = $state.current.data.pageTitle + ' - ' + AppName
         })
@@ -58,6 +58,13 @@ let app = angular.module('admin', [
                 'toState': JSON.stringify(toState),
                 'fromState': JSON.stringify(fromState)
             })
+
+            let isAuthenticationRequired = toState.name.indexOf('management') > -1 && !projectManager.hasSignIned()
+
+            if(isAuthenticationRequired){
+                event.preventDefault()
+                return $state.go('login')
+            }
 
         })
     })

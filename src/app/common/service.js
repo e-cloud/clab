@@ -8,7 +8,10 @@ angular.module('app.service', [])
     .constant('ServerAPI', {
         projectList: '/projects',
         project: '/project',
-        image: '/file'
+        image: '/file',
+        signIn: '/signin',
+        signOut: '/signout',
+        password: '/password'
     })
     .constant('serverAddress', '//45.79.133.245')
     .constant('APIVersion', 'v1')
@@ -20,13 +23,28 @@ angular.module('app.service', [])
     .factory('projectManager', function ($log, $q, netWorkService) {
 
         let projectList = {}
+        let isSignIned = false
+        let userId = 'John Doe'
 
         return {
-            getList: getList,
-            getProject: getProject,
-            updateProject: updateProject,
-            deleteProject: deleteProject,
-            createProject: createProject
+            getList,
+            getProject,
+            updateProject,
+            deleteProject,
+            createProject,
+            signIn,
+            signOut,
+            password,
+            hasSignIned,
+            getId
+        }
+
+        function getId() {
+            return userId
+        }
+
+        function hasSignIned() {
+            return isSignIned
         }
 
         function getList() {
@@ -97,15 +115,54 @@ angular.module('app.service', [])
                 })
         }
 
+        function signIn(data) {
+            return netWorkService.signIn(data)
+                .then(function done(rs) {
+                    $log.debug('signIn succeed')
+                    userId = data.id
+                    isSignIned = true
+                    return rs
+                }, function fail(rs) {
+                    $log.error('signIn failed', rs)
+                    return $q.reject(rs)
+                })
+        }
+
+        function signOut(data) {
+            return netWorkService.signOut(data)
+                .then(function done(rs) {
+                    $log.debug('signOut succeed')
+                    isSignIned = false
+                    return rs
+                }, function fail(rs) {
+                    $log.error('signOut failed', rs)
+                    return $q.reject(rs)
+                })
+        }
+
+        function password(data) {
+            return netWorkService.password(data)
+                .then(function done(rs) {
+                    $log.debug('password succeed')
+                    return rs
+                }, function fail(rs) {
+                    $log.error('password failed', rs)
+                    return $q.reject(rs)
+                })
+        }
+
     })
     .factory('netWorkService', function ($http, $q, ServerAPI) {
 
         return {
-            getProjectList: getProjectList,
-            getProject: getProject,
-            updateProject: updateProject,
-            deleteProject: deleteProject,
-            createProject: createProject
+            getProjectList,
+            getProject,
+            updateProject,
+            deleteProject,
+            createProject,
+            signIn,
+            signOut,
+            password
         }
 
         function getProjectList() {
@@ -169,6 +226,48 @@ angular.module('app.service', [])
             let d = $q.defer()
 
             $http.post(ServerAPI.project, data)
+                .success(function (rs) {
+                    d.resolve(rs)
+                })
+                .error(function (rs) {
+                    d.reject(rs)
+                })
+
+            return d.promise
+        }
+
+        function signIn(data) {
+            let d = $q.defer()
+
+            $http.post(ServerAPI.signIn, data)
+                .success(function (rs) {
+                    d.resolve(rs)
+                })
+                .error(function (rs) {
+                    d.reject(rs)
+                })
+
+            return d.promise
+        }
+
+        function signOut(data) {
+            let d = $q.defer()
+
+            $http.post(ServerAPI.signOut, data)
+                .success(function (rs) {
+                    d.resolve(rs)
+                })
+                .error(function (rs) {
+                    d.reject(rs)
+                })
+
+            return d.promise
+        }
+
+        function password(data) {
+            let d = $q.defer()
+
+            $http.post(ServerAPI.password, data)
                 .success(function (rs) {
                     d.resolve(rs)
                 })

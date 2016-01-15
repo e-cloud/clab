@@ -19,10 +19,13 @@ angular.module('admin.management', [])
     .run(function (taOptions) {
         taOptions.toolbar[3] = _.without(taOptions.toolbar[3], 'insertImage', 'insertVideo')
     })
-    .controller('ManagementController', function ($scope, $timeout, projectModal, projectManager, toastr) {
+    .controller('ManagementController', function ($scope, $state, $uibModalStack, $timeout, projectModal, projectManager, pwdModal, toastr) {
 
         let vm = this
-        $scope.hi = 'hello'
+
+        $scope.$on('$stateChangeStart', function () {
+            $uibModalStack.dismissAll('state change')
+        })
 
         getProjectList()
 
@@ -76,6 +79,16 @@ angular.module('admin.management', [])
                     getProjectList()
                 }, function () {
                     toastr.error(`delete project <${project.attr.name}> failed, try again`)
+                })
+        }
+
+        vm.changePwd = function () {
+            pwdModal.open()
+                .then(function () {
+                    projectManager.signOut()
+                        .then(function () {
+                            $state.go('login')
+                        })
                 })
         }
     })
@@ -155,6 +168,37 @@ angular.module('admin.management', [])
 
             $scope.uploadState.type = 'info'
             $scope.uploadState.loading = true
+        }
+    })
+    .factory('pwdModal', function ($uibModal) {
+        function open() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                template: require('./changePwd.html'),
+                controller: 'PwdModalController',
+                controllerAs: 'pwd',
+                backdrop: 'static'
+            })
+            return modalInstance.result
+        }
+
+        return {
+            open: open
+        }
+    })
+    .controller('PwdModalController', function ($scope, $uibModalInstance, projectManager, toastr) {
+        $scope.save = function () {
+            projectManager.password({
+                    id: projectManager.getId(),
+                    oldPassword: $scope.oldPwd,
+                    newPassword: $scope.newPwd
+                })
+                .then(function () {
+                    $uibModalInstance.close()
+                    toastr.success('Password has Been Changed! Please Sign in again.')
+                }, function () {
+                    toastr.error('Change Password Failed. Try Again!')
+                })
         }
     })
 

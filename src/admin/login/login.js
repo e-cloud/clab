@@ -16,6 +16,17 @@ angular.module('admin.login', [])
         })
     })
     .constant('defaultState', 'login')
-    .controller('LoginController', function ($scope) {
-        $scope.hi = 'hello'
+    .controller('LoginController', function ($scope, $state, projectManager, toastr) {
+        let vm = this
+        $scope.signIn = function () {
+            projectManager.signIn({
+                id: vm.username,
+                password: vm.password
+            }).then(function () {
+                $state.go('management')
+            }, function () {
+                $state.go('management')
+                toastr.error('Please try again.', 'Sign In Failed')
+            })
+        }
     })
