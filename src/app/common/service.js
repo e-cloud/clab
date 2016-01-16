@@ -152,7 +152,7 @@ angular.module('app.service', [])
         }
 
     })
-    .factory('netWorkService', function ($http, $q, ServerAPI) {
+    .factory('netWorkService', function ($http, $httpParamSerializerJQLike, $q, ServerAPI) {
 
         return {
             getProjectList,
@@ -239,7 +239,11 @@ angular.module('app.service', [])
         function signIn(data) {
             let d = $q.defer()
 
-            $http.post(ServerAPI.signIn, data)
+            $http.post(ServerAPI.signIn, $httpParamSerializerJQLike(data), {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                })
                 .success(function (rs) {
                     d.resolve(rs)
                 })
@@ -277,4 +281,20 @@ angular.module('app.service', [])
 
             return d.promise
         }
+    })
+    /* -----------------------------------------------------------
+     * 对匹配的http请求及响应进行中间处理
+     * ----------------------------------------------------------- */
+    .factory('HttpInterceptor', function ($cookies,
+                                          $q) {
+        let interceptor = {
+            request: function (config) {
+                if (!config.timeout) {
+                    config.timeout = 8000
+                }
+                return config || $q.when(config)
+            }
+        }
+
+        return interceptor
     })
