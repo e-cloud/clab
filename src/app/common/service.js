@@ -15,6 +15,9 @@ angular.module('app.service', [])
     })
     .constant('serverAddress', '//45.79.133.245')
     .constant('APIVersion', 'v1')
+    .constant('AuthCache', {
+        key: null
+    })
     .config(function (ServerAPI, APIVersion, serverAddress) {
         angular.forEach(ServerAPI, function (api, name) {
             ServerAPI[name] = `${serverAddress}/${APIVersion}${api}`
@@ -152,7 +155,7 @@ angular.module('app.service', [])
         }
 
     })
-    .factory('netWorkService', function ($http, $httpParamSerializerJQLike, $q, ServerAPI) {
+    .factory('netWorkService', function ($http, $httpParamSerializerJQLike, $q, ServerAPI, AuthCache) {
 
         return {
             getProjectList,
@@ -244,7 +247,8 @@ angular.module('app.service', [])
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 })
-                .success(function (rs) {
+                .success(function (rs, status, getHeaders) {
+                    AuthCache.key = getHeaders('code')
                     d.resolve(rs)
                 })
                 .error(function (rs) {
@@ -259,6 +263,7 @@ angular.module('app.service', [])
 
             $http.post(ServerAPI.signOut, data)
                 .success(function (rs) {
+                    AuthCache.key = null
                     d.resolve(rs)
                 })
                 .error(function (rs) {
@@ -271,7 +276,11 @@ angular.module('app.service', [])
         function password(data) {
             let d = $q.defer()
 
-            $http.post(ServerAPI.password, data)
+            $http.post(ServerAPI.password, $httpParamSerializerJQLike(data), {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                })
                 .success(function (rs) {
                     d.resolve(rs)
                 })
@@ -285,13 +294,17 @@ angular.module('app.service', [])
     /* -----------------------------------------------------------
      * 对匹配的http请求及响应进行中间处理
      * ----------------------------------------------------------- */
-    .factory('HttpInterceptor', function ($cookies,
-                                          $q) {
+    .factory('HttpInterceptor', function ($cookies, $q, AuthCache) {
         let interceptor = {
             request: function (config) {
                 if (!config.timeout) {
                     config.timeout = 8000
                 }
+
+                if (config && AuthCache.key) {
+                    config.headers.Authorization = `Basic ${AuthCache.key}`
+                }
+
                 return config || $q.when(config)
             }
         }

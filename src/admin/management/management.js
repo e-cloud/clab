@@ -13,7 +13,7 @@ angular.module('admin.management', [])
             template: require('./management.html'),
             controller: 'ManagementController',
             controllerAs: 'management',
-            data: { pageTitle: 'management' }
+            data: {pageTitle: 'management'}
         })
     })
     .run(function (taOptions) {
@@ -37,7 +37,7 @@ angular.module('admin.management', [])
         }
 
         vm.updateProject = function (project) {
-            projectModal.open({ project: project })
+            projectModal.open({project: project})
                 .then(function (res) {
                     let data = res.attr
                     if (res.imageUrl) {
@@ -56,7 +56,7 @@ angular.module('admin.management', [])
         }
 
         vm.createProject = function () {
-            projectModal.open({ project: {}, isCreate: true })
+            projectModal.open({project: {}, isCreate: true})
                 .then(function (res) {
                     let data = res.attr
                     data.url = res.imageUrl
@@ -85,10 +85,14 @@ angular.module('admin.management', [])
         vm.changePwd = function () {
             pwdModal.open()
                 .then(function () {
-                    projectManager.signOut()
-                        .then(function () {
-                            $state.go('login')
-                        })
+                    vm.signout()
+                })
+        }
+
+        vm.signout = function () {
+            projectManager.signOut()
+                .then(function () {
+                    $state.go('login')
                 })
         }
     })
@@ -146,7 +150,7 @@ angular.module('admin.management', [])
 
             $scope.uploadInstance = Upload.upload({
                 url: ServerAPI.image,
-                fields: { filename: $scope.data.file.name },
+                fields: {filename: $scope.data.file.name},
                 fileFormDataName: 'upload_file',
                 file: $scope.data.file,
                 timeout: 15 * 1000
