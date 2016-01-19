@@ -7,6 +7,14 @@ let angular = require('angular')
 let $ = require('jquery')
 let writeChar = require('../../lib/writeChar')
 let loadImage = require('blueimp-load-image')
+let Promise = require('bluebird')
+
+Promise.config({
+    // Enables all warnings except forgotten return statements.
+    warnings: {
+        wForgottenReturn: false
+    }
+});
 
 angular.module('app.directive', [])
     .directive('mainLayout', function () {
@@ -25,50 +33,74 @@ angular.module('app.directive', [])
     })
     .directive('expandable', function () {
 
-        function writeTo(el, message, index, interval, charsPerInterval) {
+        async function writeTo(elem, message, index, interval, charsPerInterval) {
             // Write a character or multiple characters to the buffer.
             let chars = message.slice(index, index + charsPerInterval);
             index += charsPerInterval;
 
             // Ensure we stay scrolled to the bottom.
-            el.scrollTop = el.scrollHeight;
+            elem.scrollTop = elem.scrollHeight;
 
-            writeChar.simple(el, chars);
+            writeChar.simple(elem, chars);
 
             // Schedule another write.
             if (index < message.length) {
-                writeTo.timeoutSignal = setTimeout(function () {
-                    writeTo(el, message, index, interval, charsPerInterval)
-                }, interval)
+                await Promise.delay(interval);
+                return writeTo(elem, message, index, interval, charsPerInterval)
+            } else {
+                return Promise.resolve();
             }
         }
 
         return {
             restrict: 'A',
             link: function (scope, elem, attr) {
-                let text = attr.expandable
+                let expandText = attr.expandable
                 let targetElem = $('.expandable', elem)
                 let originText = targetElem.text()
-                let waitTimeout
+                let entered = false, left = false, writing = false, expandPromise, originPromise
                 elem.on('mouseenter', function () {
-                    clearTimeout(waitTimeout)
-                    clearTimeout(writeTo.timeoutSignal)
-                    elem.toggleClass('expanding')
-                    targetElem.text('')
-                    waitTimeout = setTimeout(function () {
-                        writeTo(targetElem[0], text, 0, 30, 1);
-                    }, 250)
+                    entered = true
+                    left = false
+                    if (!writing) {
+                        writeExpand()
+                    }
 
-                }).on('mouseleave', async function () {
-                    clearTimeout(waitTimeout)
-                    clearTimeout(writeTo.timeoutSignal)
-                    elem.toggleClass('expanding')
-                    targetElem.text('')
-                    waitTimeout = setTimeout(function () {
-                        writeTo(targetElem[0], originText, 0, 60, 1);
-                    }, 500)
-
+                }).on('mouseleave', function () {
+                    entered = false
+                    left = true
+                    if (!writing) {
+                        writeOrigin()
+                    }
                 })
+
+                async function writeExpand() {
+                    writing = true
+                    elem.toggleClass('expanding')
+                    targetElem.text('')
+                    await Promise.delay(400)
+                    return writeTo(targetElem[0], expandText, 0, 30, 1)
+                        .then(async function () {
+                            writing = false
+                            if (left) {
+                                await Promise.delay(500)
+                                return writeOrigin()
+                            }
+                            return null
+                        })
+                }
+
+                async function writeOrigin() {
+                    writing = true
+                    elem.toggleClass('expanding')
+                    targetElem.text('')
+                    await Promise.delay(600)
+                    return writeTo(targetElem[0], originText, 0, 60, 1)
+                        .then(function () {
+                            writing = false
+                            return null
+                        })
+                }
             }
         }
     })
