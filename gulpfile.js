@@ -18,7 +18,7 @@ const del = require('del')
 /* -----------------------------------------------------------
  * user data load from outside
  * ----------------------------------------------------------- */
-const WEBPACK_CONFIG = require('./webpack.config.js')
+const WEBPACK_CONFIG = require('./webpack.config.production.js')
 const PROJECT_CONFIG = require('./project.conf.js')
 
 /* -----------------------------------------------------------

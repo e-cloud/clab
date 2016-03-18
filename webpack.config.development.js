@@ -1,21 +1,24 @@
 'use strict';
 const webpack = require('webpack')
 const path = require('path')
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const StatsPlugin = require('stats-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const SplitByPathPlugin = require('webpack-split-by-path');
 
-const extractCSS = new ExtractTextPlugin('[contentHash:8].css', {
+const extractCSS = new ExtractTextPlugin('static.css', {
     disable: false,
     allChunks: true
 })
 
-const extractSASS = new ExtractTextPlugin('[contentHash:8].css', {
+const extractSASS = new ExtractTextPlugin('app.css', {
     disable: false,
     allChunks: true
 })
+
+const webpackServerURL = 'http://localhost:8080';
 
 
 module.exports = {
@@ -23,19 +26,34 @@ module.exports = {
     entry: {
         main: [
             'babel-polyfill',
+            'webpack-dev-server/client?' + webpackServerURL + '/',
+            // Enable hot module reloading (HMR) for this entry point
+            'webpack/hot/only-dev-server',
             './app/app.js'
         ]
     },
     output: {
         path: path.join(__dirname, 'dist'),
         publicPath: '',
-        pathinfo: true,
-        filename: '[name]_[chunkHash:10].js',
-        chunkFilename: "[id]-[chunkHash:10].js",
+        //pathinfo: true,
+        filename: '[name].js',
+        devtoolModuleFilenameTemplate: function(info){
+            return "file:///"+info.absoluteResourcePath;
+        }
+        // chunkFilename: "[id]-[chunkHash:10].js",
         //libraryTarget: 'global'
     },
-    debug: false,
+    debug: true,
     devtool: 'source-map',
+    devServer: {
+        // Tell the webpack dev server from where to find the files to serve.
+        contentBase: path.join(__dirname, 'dist'),
+        colors: true,
+        publicPath: '/',
+        host: '127.0.0.1',
+        port: 8080,
+        hot: true
+    },
     profile: true,
     module: {
         loaders: [
@@ -48,7 +66,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: extractCSS.extract(['css?' + JSON.stringify({
+                loaders:  ['style','css?' + JSON.stringify({
                     sourceMap: true,
                     minimize: true,
                     autoprefixer: {
@@ -60,14 +78,14 @@ module.exports = {
                         add: true
                     },
                     normalizeCharset: true
-                })])
+                })]
             },
             {
                 test: /\.scss$/,
                 include: [
                     path.resolve(__dirname, './src')
                 ],
-                loader: extractSASS.extract(['css?sourceMap&autoprefixer&normalizeCharset', 'resolve-url', 'sass?sourceMap'])
+                loaders:  ['style','css?sourceMap&autoprefixer&normalizeCharset', 'resolve-url', 'sass?sourceMap']
             },
             {
                 test: /index\.html$/,
@@ -82,8 +100,8 @@ module.exports = {
                     path.resolve(__dirname, './src')
                 ],
                 // ng-cache can be reference later
-                // ngtemplate?relativeTo=${path.resolve(__dirname, 'src/')}!  inconvenient for direct usage for require
-                // run on use
+				// ngtemplate?relativeTo=${path.resolve(__dirname, 'src/')}!  inconvenient for direct usage for require
+				// run on use
                 loader: `html?attrs=link:href img:src use:xlink:href`
             },
             {
@@ -92,7 +110,7 @@ module.exports = {
                     path.resolve(__dirname, './src')
                 ],
                 loaders: [
-                    'file?hash=sha512&digest=hex&name=[name]_[hash:8].[ext]',
+                    'file?name=[name].[ext]',
                     'image-webpack?' + JSON.stringify({
                         progressive: true, // for jpg
                         optimizationLevel: 7, // for png
@@ -129,10 +147,10 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             //JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
-            __DEV__: false
+            __DEV__: true
         }),
-        extractCSS,
-        extractSASS,
+        //extractCSS,
+        //extractSASS,
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html'
@@ -141,7 +159,7 @@ module.exports = {
             chunkModules: true,
             exclude: [/node_modules/]
         }),
-        new CopyWebpackPlugin([{ from: 'static' }]),
+        //new CopyWebpackPlugin([{ from: 'static' }]),
         new SplitByPathPlugin([
             {
                 name: 'vendor',
@@ -153,7 +171,16 @@ module.exports = {
                 ]
             }
         ]),
-        new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+        new BrowserSyncPlugin({
+                host: 'localhost',
+                port: 3000,
+                proxy: webpackServerURL
+            },
+            {
+                reload: false
+            }),
+        new webpack.HotModuleReplacementPlugin()
+        //new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
     ],
     resolve: {
         extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx'],

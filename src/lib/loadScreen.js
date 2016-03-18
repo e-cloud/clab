@@ -8,10 +8,11 @@ let loadScreen = {
         $('body').addClass('loaded');
         setTimeout(function () {
             $('body').addClass('load-finished');
-        }, 3000);
+        }, 1500);
     },
     loading: function () {
         $('body').removeClass();
     }
 }
+
 export default loadScreen

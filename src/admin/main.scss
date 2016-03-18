@@ -5,7 +5,7 @@ $lib_path: "../../bower_components";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
 @import "../app/common/base";
-@import "../app/common/browser_hack";
+@import "../app/common/browserhack";
 @import "../app/common/scrollbar";
 @import "../app/common/layout";
 @import "login/login";

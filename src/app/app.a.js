@@ -3,8 +3,7 @@
  */
 'use strict';
 
-require('../lib/loadScreen.css')
-require('./app.scss')
+//require('./app.scss')
 
 import './common/common'
 
@@ -81,13 +80,6 @@ let app = angular.module('app', [
             document.querySelector('head').appendChild(msViewPortStyle)
         }
     })
-    .run(function($templateCache) {
-        $templateCache.put('a', 'g')
-    });
-
-angular.module('ng').run(function($templateCache) {
-    $templateCache.put('b', 'g') }
-    )
 
 bootstrap(app)
 
