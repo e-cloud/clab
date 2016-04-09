@@ -1,9 +1,7 @@
 'use strict';
 const webpack = require('webpack')
 const path = require('path')
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const IndexHtmlPlugin = require('indexhtml-webpack-plugin')
 const StatsPlugin = require('stats-webpack-plugin')
 
@@ -30,7 +28,6 @@ module.exports = {
         pathinfo: true,
         filename: '[name]_[chunkHash:10].js',
         chunkFilename: "[id]-[chunkHash:10].js",
-        //libraryTarget: 'global'
     },
     debug: true,
     devtool: 'source-map',
@@ -46,20 +43,28 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: extractCSS.extract('style', 'css?sourceMap')
+                loader: extractCSS.extract('style', 'css?sourceMap', 'postcss')
             },
             {
                 test: /\.scss$/,
                 include: [
                     path.resolve(__dirname, './src')
                 ],
-                loader: extractSASS.extract(['css?sourceMap', 'resolve-url', 'sass?sourceMap'])
+                loader: extractSASS.extract('style', ['css?sourceMap', 'postcss', 'resolve-url', 'sass?sourceMap'])
+            },
+            {
+                test: /index\.html$/,
+                include: [
+                    path.resolve(__dirname, './src')
+                ],
+                loader: 'html?attrs=link:href img:src use:xlink:href script:src'
             },
             {
                 test: /\.html$/,
                 include: [
                     path.resolve(__dirname, './src')
                 ],
+                exclude: /index\.html$/,
                 loader: 'html?attrs=link:href img:src use:xlink:href'
             },
             {
@@ -68,15 +73,7 @@ module.exports = {
                     path.resolve(__dirname, './src')
                 ],
                 loaders: [
-                    'file?hash=sha512&digest=hex&name=[name]_[hash:8].[ext]',
-                    'image-webpack?' + JSON.stringify({
-                        progressive: true, // for jpg
-                        optimizationLevel: 7, // for png
-                        interlaced: false, // for git
-                        svgo: {}, // for svg
-                        //bypassOnDebug: true, // turn off optimization on debug
-                        pngquant: { quality: '65-90', speed: 4 }
-                    })
+                    'file?hash=sha512&digest=hex&name=[name]_[hash:8].[ext]'
                 ]
             },
             {
@@ -96,19 +93,14 @@ module.exports = {
             $: 'jquery'
         }),
         new webpack.DefinePlugin({
-            //JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
             __DEV__: true
         }),
         extractSASS,
         extractCSS,
-        /*new HtmlWebpackPlugin({
-         filename: 'index.html',
-         template: 'index.html'
-         })*/
         new IndexHtmlPlugin('index.html', 'index.html'),
         new StatsPlugin('stats.json', {
-          chunkModules: true,
-          exclude: [/node_modules/]
+            chunkModules: true,
+            exclude: [/node_modules/]
         })
     ],
     resolve: {
@@ -117,10 +109,8 @@ module.exports = {
             'blueimp-load-image': 'blueimp-load-image/js/load-image.js'
         }
     },
-    'html-minify-loader': {
-        empty: true,        // KEEP empty attributes
-        cdata: false,        // KEEP CDATA from scripts
-        comments: false     // KEEP comments
+    node: {
+        __dirname: true
     },
     eslint: {
         emitError: false,
@@ -129,7 +119,17 @@ module.exports = {
         failOnWarning: false,
         failOnError: false
     },
-    node: {
-        __dirname: true
+    postcss: function () {
+        return [
+            require('autoprefixer')({
+                browsers: [
+                    'last 2 versions',
+                    '> 1%',
+                    'not ie <= 8'
+                ],
+                add: true
+            }),
+            require('postcss-normalize-charset')
+        ]
     }
 }

@@ -170,7 +170,9 @@ body {
 	z-index: -1;
 }
 
-.loaded.load-finished #indicator, .loaded.load-finished #indicator-before, .loaded.load-finished #indicator-after {
+.loaded.load-finished #indicator,
+.loaded.load-finished #indicator-before,
+.loaded.load-finished #indicator-after {
 	animation: none;
 }
 

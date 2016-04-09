@@ -1,25 +1,14 @@
-'use strict';
+'use strict'
 const webpack = require('webpack')
 const path = require('path')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const StatsPlugin = require('stats-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const SplitByPathPlugin = require('webpack-split-by-path');
+const SplitByPathPlugin = require('webpack-split-by-path')
 
-const extractCSS = new ExtractTextPlugin('static.css', {
-    disable: false,
-    allChunks: true
-})
+const webpackServerURL = 'http://localhost:8080'
 
-const extractSASS = new ExtractTextPlugin('app.css', {
-    disable: false,
-    allChunks: true
-})
-
-const webpackServerURL = 'http://localhost:8080';
-
+let extractCSS = new ExtractTextPlugin('[contentHash:8].css')
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -27,21 +16,17 @@ module.exports = {
         main: [
             'babel-polyfill',
             'webpack-dev-server/client?' + webpackServerURL + '/',
-            // Enable hot module reloading (HMR) for this entry point
-            'webpack/hot/only-dev-server',
+            'webpack/hot/dev-server',
             './app/app.js'
         ]
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        publicPath: '',
-        //pathinfo: true,
+        publicPath: 'http://localhost:'+ 3000 + '/',
         filename: '[name].js',
-        devtoolModuleFilenameTemplate: function(info){
-            return "file:///"+info.absoluteResourcePath;
+        devtoolModuleFilenameTemplate: function (info) {
+            return "file://" + info.absoluteResourcePath
         }
-        // chunkFilename: "[id]-[chunkHash:10].js",
-        //libraryTarget: 'global'
     },
     debug: true,
     devtool: 'source-map',
@@ -49,12 +34,19 @@ module.exports = {
         // Tell the webpack dev server from where to find the files to serve.
         contentBase: path.join(__dirname, 'dist'),
         colors: true,
-        publicPath: '/',
-        host: '127.0.0.1',
+        publicPath: webpackServerURL + '/',
+        host: 'localhost',
         port: 8080,
-        hot: true
+        hot: true,
+        stats: {
+            assets: true,
+            colors: true,
+            version: true,
+            hash: true,
+            timings: true,
+            chunks: false
+        }
     },
-    profile: true,
     module: {
         loaders: [
             {
@@ -66,26 +58,14 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loaders:  ['style','css?' + JSON.stringify({
-                    sourceMap: true,
-                    minimize: true,
-                    autoprefixer: {
-                        browsers: [
-                            'last 2 versions',
-                            '> 1%',
-                            'not ie <= 8'
-                        ],
-                        add: true
-                    },
-                    normalizeCharset: true
-                })]
+                loader: extractCSS.extract(['css', 'postcss'])
             },
             {
                 test: /\.scss$/,
                 include: [
                     path.resolve(__dirname, './src')
                 ],
-                loaders:  ['style','css?sourceMap&autoprefixer&normalizeCharset', 'resolve-url', 'sass?sourceMap']
+                loaders: ['style', 'css?sourceMap', 'postcss', 'resolve-url', 'sass?sourceMap']
             },
             {
                 test: /index\.html$/,
@@ -93,15 +73,16 @@ module.exports = {
                     path.resolve(__dirname, './src')
                 ],
                 loader: 'html?attrs=link:href img:src use:xlink:href'
-            }, {
+            },
+            {
                 test: /\.html$/,
                 exclude: /index\.html$/,
                 include: [
                     path.resolve(__dirname, './src')
                 ],
                 // ng-cache can be reference later
-				// ngtemplate?relativeTo=${path.resolve(__dirname, 'src/')}!  inconvenient for direct usage for require
-				// run on use
+                // ngtemplate?relativeTo=${path.resolve(__dirname, 'src/')}!  inconvenient for direct usage for require
+                // run on use
                 loader: `html?attrs=link:href img:src use:xlink:href`
             },
             {
@@ -110,23 +91,7 @@ module.exports = {
                     path.resolve(__dirname, './src')
                 ],
                 loaders: [
-                    'file?name=[name].[ext]',
-                    'image-webpack?' + JSON.stringify({
-                        progressive: true, // for jpg
-                        optimizationLevel: 7, // for png
-                        interlaced: false, // for git
-                        svgo: {
-                            plugins: [
-                                {
-                                    cleanupIDs: false,
-                                }
-                            ],
-
-
-                        }, // for svg
-                        //bypassOnDebug: true, // turn off optimization on debug
-                        pngquant: { quality: '65-90', speed: 4 }
-                    })
+                    'file?name=[name].[ext]'
                 ]
             },
             {
@@ -146,20 +111,13 @@ module.exports = {
             $: 'jquery'
         }),
         new webpack.DefinePlugin({
-            //JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
             __DEV__: true
         }),
-        //extractCSS,
-        //extractSASS,
+        extractCSS,
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html'
         }),
-        new StatsPlugin('stats.json', {
-            chunkModules: true,
-            exclude: [/node_modules/]
-        }),
-        //new CopyWebpackPlugin([{ from: 'static' }]),
         new SplitByPathPlugin([
             {
                 name: 'vendor',
@@ -180,7 +138,6 @@ module.exports = {
                 reload: false
             }),
         new webpack.HotModuleReplacementPlugin()
-        //new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
     ],
     resolve: {
         extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx'],
@@ -188,10 +145,8 @@ module.exports = {
             'blueimp-load-image': 'blueimp-load-image/js/load-image.js'
         }
     },
-    'html-minify-loader': {
-        empty: true,        // KEEP empty attributes
-        cdata: false,        // KEEP CDATA from scripts
-        comments: false     // KEEP comments
+    node: {
+        __dirname: true
     },
     eslint: {
         emitError: false,
@@ -200,7 +155,17 @@ module.exports = {
         failOnWarning: false,
         failOnError: false
     },
-    node: {
-        __dirname: true
+    postcss: function () {
+        return [
+            require('autoprefixer')({
+                browsers: [
+                    'last 2 versions',
+                    '> 1%',
+                    'not ie <= 8'
+                ],
+                add: true
+            }),
+            require('postcss-normalize-charset')
+        ]
     }
 }

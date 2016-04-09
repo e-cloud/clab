@@ -1,11 +1,7 @@
 @charset "UTF-8";
-$lib_path: "../../bower_components";
-//@import url(#{$lib_path}/animate.css/animate.min.css);
 @import "~angular-toastr/dist/angular-toastr.css";
-
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "common/common";
-
 @import './home/home';
 @import './connect/connect';
 @import './about/about';
